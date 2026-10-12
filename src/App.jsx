@@ -1,21 +1,53 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'motion/react';
-import { ArrowRight, ChevronDown, Menu, X, Mail, ArrowUpRight, Phone, MapPin, Shield, Code2, Brain, Cloud, CheckCircle2 } from 'lucide-react';
+import {
+  ArrowRight,
+  ChevronDown,
+  Menu,
+  X,
+  Mail,
+  ArrowUpRight,
+} from 'lucide-react';
 
-function Reveal({ children, delay = 0, className = '', y = 30 }) {
+/* ─── Scroll-reveal wrapper ─── */
+function Reveal({ children, delay = 0, className = '', y = 50 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-50px' });
+  const inView = useInView(ref, { once: true, margin: '-80px' });
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.85, delay, ease: [0.16, 1, 0.3, 1] }} className={className}>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 1, delay, ease: [0.16, 1, 0.3, 1] }}
+      className={className}
+    >
       {children}
     </motion.div>
+  );
+}
+
+/* ─── Horizontal text marquee ─── */
+function Marquee({ items, speed = 30 }) {
+  return (
+    <div className="overflow-hidden whitespace-nowrap select-none pointer-events-none">
+      <motion.div
+        className="inline-flex gap-16 text-[clamp(4rem,10vw,9rem)] font-black uppercase tracking-tight text-white/[0.03]"
+        animate={{ x: ['0%', '-50%'] }}
+        transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
+      >
+        {[...items, ...items].map((t, i) => (
+          <span key={i} className="shrink-0">
+            {t}
+          </span>
+        ))}
+      </motion.div>
+    </div>
   );
 }
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeService, setActiveService] = useState(0);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -23,10 +55,14 @@ export default function App() {
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
+  /* Parallax for hero image */
   const heroRef = useRef(null);
-  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const heroY = useTransform(heroProgress, [0, 1], ['0%', '18%']);
-  const heroOpacity = useTransform(heroProgress, [0, 0.75], [1, 0]);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroY = useTransform(heroProgress, [0, 1], ['0%', '25%']);
+  const heroOpacity = useTransform(heroProgress, [0, 0.7], [1, 0]);
 
   const links = [
     { label: 'Services', href: '#services' },
@@ -35,404 +71,494 @@ export default function App() {
     { label: 'Contact', href: '#contact' },
   ];
 
-  const services = [
-    {
-      icon: Code2,
-      title: 'Software Engineering',
-      desc: 'We build the backend infrastructure that companies run on — high-throughput APIs, event-driven systems, platform migrations. The kind of work that doesn\'t look exciting in a pitch deck but keeps a business alive at 3am.',
-      points: ['API & platform architecture', 'Legacy system modernization', 'Real-time data pipelines', 'Performance engineering'],
-    },
-    {
-      icon: Shield,
-      title: 'Cybersecurity',
-      desc: 'Most security work happens after a breach. We\'d rather it didn\'t come to that. We design zero-trust architectures, run adversarial simulations, and build monitoring systems that catch threats before they become headlines.',
-      points: ['Zero-trust network design', 'Penetration testing', 'Compliance & audit prep', 'Incident response planning'],
-    },
-    {
-      icon: Brain,
-      title: 'Artificial Intelligence',
-      desc: 'We\'re skeptical of most AI hype — and that makes us better at shipping AI that actually works. Fine-tuned models, retrieval pipelines, structured agents. No magic, just careful engineering applied to the right problems.',
-      points: ['LLM fine-tuning & deployment', 'RAG pipelines', 'Document intelligence', 'MLOps & model monitoring'],
-    },
-    {
-      icon: Cloud,
-      title: 'Cloud & Infrastructure',
-      desc: 'Infrastructure that\'s boring to operate is infrastructure done right. We set up multi-region Kubernetes clusters, CI/CD pipelines, and observability stacks — then hand you the keys to something that just works.',
-      points: ['Kubernetes & container orchestration', 'CI/CD automation', 'Multi-cloud strategy', 'Cost optimization & FinOps'],
-    },
-  ];
-
   return (
-    <div className="bg-[#04060c] text-[#b0b8c8] antialiased overflow-x-hidden selection:bg-[#4f6df0]/30 selection:text-white">
-
-      {/* NAV */}
-      <nav className={`fixed inset-x-0 top-0 z-[100] transition-all duration-500 ${scrolled ? 'bg-[#04060c]/85 backdrop-blur-2xl border-b border-white/[0.06] py-3.5' : 'bg-transparent py-5'}`}>
-        <div className="max-w-[1320px] mx-auto px-6 md:px-10 flex items-center justify-between">
-          <a href="#" className="group flex items-baseline gap-1.5">
-            <span className="text-[15px] font-semibold tracking-[0.28em] uppercase text-white/90 group-hover:text-white transition-colors">Nexora</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4f6df0] group-hover:shadow-[0_0_10px_#4f6df0] transition-shadow" />
+    <div className="bg-[#04060c] text-[#c8cfd8] antialiased overflow-x-hidden">
+      {/* ══════════════════════════════════════════════════════════════════
+          NAVIGATION
+          ══════════════════════════════════════════════════════════════════ */}
+      <nav
+        className={`fixed inset-x-0 top-0 z-[100] transition-all duration-500 ${
+          scrolled
+            ? 'bg-[#04060c]/80 backdrop-blur-2xl border-b border-white/[0.06] py-4'
+            : 'bg-transparent py-6'
+        }`}
+      >
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex items-center justify-between">
+          <a href="#" className="group flex items-baseline gap-1">
+            <span className="text-lg font-semibold tracking-[0.3em] uppercase text-white/90 group-hover:text-white transition-colors">
+              Nexora
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#4f6df0] group-hover:shadow-[0_0_12px_#4f6df0] transition-shadow" />
           </a>
 
-          <div className="hidden md:flex items-center gap-9">
+          <div className="hidden md:flex items-center gap-10">
             {links.map((l) => (
-              <a key={l.label} href={l.href} className="text-[12.5px] font-medium tracking-wide text-white/35 hover:text-white/80 transition-colors duration-300">{l.label}</a>
+              <a
+                key={l.label}
+                href={l.href}
+                className="text-[13px] font-medium tracking-wide text-white/40 hover:text-white transition-colors duration-300"
+              >
+                {l.label}
+              </a>
             ))}
-            <div className="w-px h-4 bg-white/10" />
-            <a href="#contact" className="text-[12.5px] font-medium tracking-wide text-white/90 border border-white/15 hover:border-white/40 hover:bg-white/[0.03] px-5 py-2 rounded-full transition-all duration-300">
-              Get in touch
+            <a
+              href="#contact"
+              className="text-[13px] font-medium tracking-wide text-white/90 border border-white/20 hover:border-white/50 px-5 py-2 rounded-full transition-colors duration-300"
+            >
+              Let's talk
             </a>
           </div>
 
-          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-white/50 hover:text-white" aria-label="Menu">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden text-white/60 hover:text-white"
+            aria-label="Menu"
+          >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
 
         <AnimatePresence>
           {menuOpen && (
-            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="md:hidden bg-[#04060c]/95 backdrop-blur-xl border-t border-white/[0.05] overflow-hidden">
-              <div className="flex flex-col px-6 py-6 gap-1">
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-[#04060c]/95 backdrop-blur-xl border-t border-white/[0.06] overflow-hidden"
+            >
+              <div className="flex flex-col gap-1 px-6 py-6">
                 {links.map((l) => (
-                  <a key={l.label} href={l.href} onClick={() => setMenuOpen(false)} className="text-base font-light text-white/60 hover:text-white py-3 border-b border-white/[0.04] transition-colors">{l.label}</a>
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-lg font-light text-white/70 hover:text-white py-3 border-b border-white/[0.04] transition-colors"
+                  >
+                    {l.label}
+                  </a>
                 ))}
-                <a href="#contact" onClick={() => setMenuOpen(false)} className="mt-4 text-center text-sm font-medium text-white border border-white/15 rounded-full py-3 hover:bg-white/[0.03] transition-all">Get in touch</a>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
 
-      {/* ════════════════════════════════════════════════════════
-          HERO — cinematic, film-poster feel
-          ════════════════════════════════════════════════════════ */}
+      {/* ══════════════════════════════════════════════════════════════════
+          HERO — Full-bleed cinematic
+          ══════════════════════════════════════════════════════════════════ */}
       <section ref={heroRef} className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
+        {/* Parallax background */}
         <motion.div className="absolute inset-0 z-0" style={{ y: heroY }}>
-          <img src="/hero-bg.jpg" alt="" className="w-full h-[120%] object-cover object-center" />
+          <img
+            src="/hero-bg.jpg"
+            alt=""
+            className="w-full h-[120%] object-cover object-center"
+          />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#04060c] via-[#04060c]/25 to-[#04060c]/15 z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#04060c]/50 via-transparent to-transparent z-[1]" />
-        <div className="absolute bottom-0 inset-x-0 h-52 bg-gradient-to-t from-[#04060c] to-transparent z-[1]" />
 
-        <motion.div className="relative z-10 w-full max-w-[1320px] mx-auto px-6 md:px-10 pb-20 md:pb-24" style={{ opacity: heroOpacity }}>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(2.6rem,6.5vw,5.5rem)] font-bold leading-[0.94] tracking-[-0.025em] text-white max-w-3xl"
+        {/* Cinematic overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#04060c] via-[#04060c]/40 to-transparent z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#04060c]/70 via-transparent to-transparent z-[1]" />
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#04060c] to-transparent z-[1]" />
+
+        {/* Content — anchored to bottom-left like a film title card */}
+        <motion.div
+          className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 pb-20 md:pb-28"
+          style={{ opacity: heroOpacity }}
+        >
+          <motion.p
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-[#7b8fea] mb-6"
           >
-            We build the
+            Software · Security · Intelligence · Cloud
+          </motion.p>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[clamp(2.5rem,7vw,6.5rem)] font-bold leading-[0.95] tracking-tight text-white max-w-4xl"
+          >
+            Building what
             <br />
-            systems behind
-            <br />
-            <span className="text-white/40">ambitious companies</span><span className="text-[#4f6df0]">.</span>
+            comes next<span className="text-[#4f6df0]">.</span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.65 }}
-            className="mt-7 text-[15px] md:text-[16px] text-white/35 font-light max-w-md leading-[1.75]"
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="mt-6 text-base md:text-lg text-white/50 font-light max-w-lg leading-relaxed"
           >
-            Software engineering, cybersecurity, AI, and cloud
-            infrastructure. Based in San Francisco with teams
-            in Zürich and Singapore.
+            We design and engineer the systems that
+            power ambitious organizations — from sovereign
+            security architectures to adaptive intelligence platforms.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.95 }}
-            className="mt-10 flex flex-wrap items-center gap-4"
+            transition={{ duration: 0.8, delay: 1.1 }}
+            className="mt-10 flex items-center gap-6"
           >
-            <a href="#work" className="group inline-flex items-center gap-2.5 bg-[#4f6df0] hover:bg-[#5d7af5] text-white text-[13px] font-medium tracking-wide px-6 py-3 rounded-full transition-all duration-300 shadow-[0_0_25px_rgba(79,109,240,0.2)] hover:shadow-[0_0_35px_rgba(79,109,240,0.35)]">
-              <span>See our work</span>
-              <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-            </a>
-            <a href="#services" className="inline-flex items-center gap-2.5 text-white/45 hover:text-white/80 text-[13px] font-medium tracking-wide px-6 py-3 rounded-full border border-white/[0.08] hover:border-white/20 transition-all duration-300">
-              What we do
+            <a
+              href="#work"
+              className="group inline-flex items-center gap-3 text-sm font-medium text-white"
+            >
+              <span className="w-12 h-12 rounded-full border border-white/20 group-hover:border-[#4f6df0] group-hover:bg-[#4f6df0]/10 flex items-center justify-center transition-all duration-500">
+                <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+              </span>
+              <span className="tracking-wide group-hover:text-[#a0b4ff] transition-colors">See our work</span>
             </a>
           </motion.div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }} className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden md:block">
-          <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 2.2, repeat: Infinity }}>
-            <ChevronDown size={16} className="text-white/15" />
+        {/* Scroll hint */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2 }}
+          className="absolute bottom-8 right-10 z-10 hidden md:flex flex-col items-center gap-2"
+        >
+          <span className="text-[10px] tracking-[0.3em] uppercase text-white/25 font-medium [writing-mode:vertical-lr]">
+            Scroll
+          </span>
+          <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+            <ChevronDown size={14} className="text-white/25" />
           </motion.div>
         </motion.div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════
-          SERVICES — interactive selector
-          ════════════════════════════════════════════════════════ */}
-      <section id="services" className="relative py-28 md:py-36 border-t border-white/[0.04]">
-        <div className="max-w-[1320px] mx-auto px-6 md:px-10">
+      {/* ══════════════════════════════════════════════════════════════════
+          SERVICES — Cinematic staggered layout (not a card grid)
+          ══════════════════════════════════════════════════════════════════ */}
+      <section id="services" className="relative py-32 md:py-44">
+        {/* Background marquee for texture */}
+        <div className="absolute inset-0 flex items-center overflow-hidden opacity-100 pointer-events-none">
+          <Marquee items={['Engineering', 'Security', 'Intelligence', 'Infrastructure']} speed={45} />
+        </div>
+
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
           <Reveal>
-            <p className="text-[11px] font-medium tracking-[0.35em] uppercase text-[#7b8fea] mb-3">What we do</p>
-            <h2 className="text-3xl md:text-[2.8rem] font-bold tracking-tight text-white leading-[1.15] max-w-xl">
-              Four things, done properly.
-            </h2>
-            <p className="mt-4 text-[14.5px] text-white/30 font-light max-w-lg leading-[1.75]">
-              We don't try to do everything. We focus on the four disciplines where we have
-              genuine depth — and we say no to the rest.
+            <p className="text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-[#7b8fea] mb-4">
+              What we do
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-10 mt-16">
-            {/* Left: tabs */}
-            <div className="lg:col-span-5 border-t border-white/[0.06]">
-              {services.map((s, i) => {
-                const Icon = s.icon;
-                const active = activeService === i;
-                return (
-                  <button
-                    key={s.title}
-                    onClick={() => setActiveService(i)}
-                    className={`w-full text-left py-5 md:py-6 border-b border-white/[0.06] flex items-center gap-4 group transition-all duration-300 cursor-pointer ${active ? 'opacity-100' : 'opacity-35 hover:opacity-60'}`}
-                  >
-                    <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 transition-all duration-300 ${active ? 'bg-[#4f6df0]/15 text-[#7b8fea] border border-[#4f6df0]/25' : 'bg-white/[0.02] text-white/25 border border-white/[0.05]'}`}>
-                      <Icon size={16} />
-                    </div>
-                    <span className={`text-[15px] md:text-base font-semibold tracking-tight transition-colors duration-300 ${active ? 'text-white' : 'text-white/60'}`}>{s.title}</span>
-                    <ArrowRight size={14} className={`ml-auto shrink-0 transition-all duration-300 ${active ? 'text-[#7b8fea] opacity-100' : 'opacity-0'}`} />
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Right: detail */}
-            <div className="lg:col-span-7 mt-8 lg:mt-0">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeService}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="p-7 md:p-9 rounded-2xl bg-white/[0.015] border border-white/[0.05] h-full flex flex-col justify-between"
+          {/* Service entries — editorial staggered layout */}
+          <div className="mt-16 space-y-0 border-t border-white/[0.06]">
+            {[
+              {
+                num: '01',
+                title: 'Software Engineering',
+                desc: 'Distributed platforms, event-driven architectures, and mission-critical systems built to operate at planetary scale without compromise.',
+              },
+              {
+                num: '02',
+                title: 'Cybersecurity',
+                desc: 'Zero-trust frameworks, autonomous threat response, and cryptographic architectures that protect sovereign enterprise infrastructure.',
+              },
+              {
+                num: '03',
+                title: 'Artificial Intelligence',
+                desc: 'Custom LLM deployments, agentic workflows, and neural pipelines that convert unstructured complexity into operational advantage.',
+              },
+              {
+                num: '04',
+                title: 'Cloud Architecture',
+                desc: 'Multi-region orchestration, container-native infrastructure, and observability frameworks engineered for zero-downtime operations.',
+              },
+            ].map((s, i) => (
+              <Reveal key={s.num} delay={i * 0.08}>
+                <a
+                  href="#contact"
+                  className="group flex flex-col md:flex-row md:items-center gap-4 md:gap-0 py-10 md:py-12 border-b border-white/[0.06] cursor-pointer"
                 >
-                  <div>
-                    <p className="text-[14.5px] text-white/45 font-light leading-[1.8] mb-8">
-                      {services[activeService].desc}
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      {services[activeService].points.map((p) => (
-                        <div key={p} className="flex items-center gap-2.5 text-[13px] text-white/50">
-                          <CheckCircle2 size={13} className="text-[#4f6df0]/60 shrink-0" />
-                          <span>{p}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <a href="#contact" className="inline-flex items-center gap-2 text-[12px] font-medium tracking-wider text-[#7b8fea]/80 hover:text-white mt-8 transition-colors duration-300">
-                    Start a conversation <ArrowRight size={12} />
-                  </a>
-                </motion.div>
-              </AnimatePresence>
-            </div>
+                  <span className="text-xs font-mono text-white/15 md:w-20 shrink-0">
+                    {s.num}
+                  </span>
+                  <h3 className="text-2xl md:text-4xl lg:text-5xl font-semibold text-white/80 group-hover:text-white transition-colors duration-500 md:flex-1 tracking-tight">
+                    {s.title}
+                  </h3>
+                  <p className="text-sm text-white/30 group-hover:text-white/50 font-light leading-relaxed max-w-sm md:text-right transition-colors duration-500">
+                    {s.desc}
+                  </p>
+                  <ArrowUpRight
+                    size={20}
+                    className="hidden md:block ml-8 text-white/10 group-hover:text-[#4f6df0] group-hover:rotate-0 -rotate-45 transition-all duration-500 shrink-0"
+                  />
+                </a>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════
-          WORK — Magazine layout with robust live images
-          ════════════════════════════════════════════════════════ */}
-      <section id="work" className="relative py-28 md:py-36 border-t border-white/[0.04]">
-        <div className="max-w-[1320px] mx-auto px-6 md:px-10">
+      {/* ══════════════════════════════════════════════════════════════════
+          WORK — Magazine-style project showcases
+          ══════════════════════════════════════════════════════════════════ */}
+      <section id="work" className="relative pb-32 md:pb-44">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <Reveal>
-            <p className="text-[11px] font-medium tracking-[0.35em] uppercase text-[#7b8fea] mb-3">Recent projects</p>
-            <h2 className="text-3xl md:text-[2.8rem] font-bold tracking-tight text-white leading-[1.15]">
-              A few things we've shipped.
-            </h2>
+            <div className="flex items-end justify-between mb-16 md:mb-24">
+              <div>
+                <p className="text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-[#7b8fea] mb-4">
+                  Selected work
+                </p>
+                <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.05]">
+                  Case studies
+                </h2>
+              </div>
+              <a
+                href="#contact"
+                className="hidden md:inline-flex items-center gap-2 text-xs tracking-wider uppercase text-white/40 hover:text-white transition-colors"
+              >
+                View all <ArrowRight size={14} />
+              </a>
+            </div>
           </Reveal>
 
-          {/* Featured */}
-          <Reveal className="mt-14">
-            <a href="#contact" className="group block relative rounded-2xl overflow-hidden cursor-pointer">
-              <div className="aspect-[2.2/1] overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&q=80" alt="Data center" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.4s] ease-out" />
+          {/* Project 1 — Full width hero card */}
+          <Reveal>
+            <a href="#contact" className="group block relative rounded-2xl overflow-hidden mb-8 cursor-pointer">
+              <div className="aspect-[21/9] md:aspect-[2.4/1] overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&q=80"
+                  alt="Data center infrastructure"
+                  className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[1.2s] ease-out"
+                />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-[#04060c] via-[#04060c]/15 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#04060c]/40 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 p-7 md:p-10">
-                <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-[#7b8fea]/80 block mb-3">Cloud · Financial Services</span>
-                <h3 className="text-xl md:text-3xl font-bold text-white tracking-tight mb-2">Real-time settlement infrastructure</h3>
-                <p className="text-[13px] text-white/30 font-light max-w-md leading-relaxed">
-                  Rebuilt the core transaction pipeline for a multinational clearing house.
-                  Reduced settlement latency by 92% and eliminated a class of race conditions
-                  that had caused two outages in the previous year.
+              <div className="absolute inset-0 bg-gradient-to-t from-[#04060c] via-[#04060c]/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#04060c]/60 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 p-8 md:p-12">
+                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#7b8fea] block mb-3">
+                  Cloud Infrastructure
+                </span>
+                <h3 className="text-2xl md:text-4xl font-bold text-white tracking-tight mb-2">
+                  Global Edge Mesh
+                </h3>
+                <p className="text-sm text-white/40 font-light max-w-md">
+                  Multi-region computation network that reduced transatlantic
+                  latency from 68ms to under 5ms for tier-1 financial institutions.
                 </p>
               </div>
-              <div className="absolute top-5 right-5 md:top-7 md:right-7 w-10 h-10 rounded-full border border-white/[0.08] group-hover:border-white/20 group-hover:bg-white/[0.04] flex items-center justify-center transition-all duration-500">
-                <ArrowUpRight size={15} className="text-white/20 group-hover:text-white transition-colors" />
+              <div className="absolute top-6 right-6 md:top-8 md:right-8 w-10 h-10 rounded-full border border-white/10 group-hover:border-white/30 flex items-center justify-center transition-all duration-500">
+                <ArrowUpRight size={16} className="text-white/30 group-hover:text-white transition-colors" />
               </div>
             </a>
           </Reveal>
 
-          {/* Two-col */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            <Reveal delay={0.08}>
-              <a href="#contact" className="group block relative rounded-2xl overflow-hidden cursor-pointer">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=900&q=80" alt="Security" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.4s] ease-out" />
+          {/* Projects 2 & 3 — Asymmetric two-column (with 100% verified live images) */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+            <Reveal delay={0.1} className="md:col-span-3">
+              <a href="#contact" className="group block relative rounded-2xl overflow-hidden cursor-pointer h-full">
+                <div className="aspect-[4/3] md:aspect-auto md:h-full min-h-[400px] overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1000&q=80"
+                    alt="Cybersecurity operations"
+                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[1.2s] ease-out"
+                  />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#04060c] via-[#04060c]/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-7 md:p-8">
-                  <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-[#7b8fea]/80 block mb-2.5">Security · Government</span>
-                  <h3 className="text-lg md:text-xl font-bold text-white tracking-tight mb-2">Zero-trust network redesign</h3>
-                  <p className="text-[13px] text-white/30 font-light max-w-sm leading-relaxed">
-                    Designed and deployed a zero-trust architecture across 340 endpoints
-                    for a federal contractor — passing CMMC Level 3 on the first audit.
+                <div className="absolute inset-0 bg-gradient-to-t from-[#04060c] via-[#04060c]/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 p-8 md:p-10">
+                  <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#7b8fea] block mb-3">
+                    Cybersecurity
+                  </span>
+                  <h3 className="text-xl md:text-3xl font-bold text-white tracking-tight mb-2">
+                    Autonomous Perimeter Defense
+                  </h3>
+                  <p className="text-sm text-white/40 font-light max-w-sm">
+                    Real-time behavioral graph analytics protecting
+                    defense-grade cloud environments with 0.001% false positive rate.
                   </p>
                 </div>
-                <div className="absolute top-5 right-5 w-9 h-9 rounded-full border border-white/[0.06] group-hover:border-white/15 flex items-center justify-center transition-all duration-500">
-                  <ArrowUpRight size={14} className="text-white/15 group-hover:text-white transition-colors" />
+                <div className="absolute top-6 right-6 w-10 h-10 rounded-full border border-white/10 group-hover:border-white/30 flex items-center justify-center transition-all duration-500">
+                  <ArrowUpRight size={16} className="text-white/30 group-hover:text-white transition-colors" />
                 </div>
               </a>
+            </Reveal>
+
+            <Reveal delay={0.2} className="md:col-span-2">
+              <a href="#contact" className="group block relative rounded-2xl overflow-hidden cursor-pointer h-full">
+                <div className="aspect-[4/3] md:aspect-auto md:h-full min-h-[400px] overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80"
+                    alt="AI neural network and computing architecture"
+                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[1.2s] ease-out"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#04060c] via-[#04060c]/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 p-8 md:p-10">
+                  <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#7b8fea] block mb-3">
+                    AI Platform
+                  </span>
+                  <h3 className="text-xl md:text-3xl font-bold text-white tracking-tight mb-2">
+                    Cognitive Synthesis
+                  </h3>
+                  <p className="text-sm text-white/40 font-light max-w-sm">
+                    Enterprise intelligence engine parsing
+                    multi-modal data at 10x analyst speed.
+                  </p>
+                </div>
+                <div className="absolute top-6 right-6 w-10 h-10 rounded-full border border-white/10 group-hover:border-white/30 flex items-center justify-center transition-all duration-500">
+                  <ArrowUpRight size={16} className="text-white/30 group-hover:text-white transition-colors" />
+                </div>
+              </a>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          ABOUT — Editorial split with large typography
+          ══════════════════════════════════════════════════════════════════ */}
+      <section id="about" className="relative py-32 md:py-44 border-t border-white/[0.04]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+            {/* Left — large statement */}
+            <Reveal>
+              <div>
+                <p className="text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-[#7b8fea] mb-8">
+                  About Nexora
+                </p>
+                <h2 className="text-3xl md:text-5xl lg:text-[3.5rem] font-bold tracking-tight text-white leading-[1.1] mb-10">
+                  We exist to solve problems
+                  most firms won't attempt.
+                </h2>
+                <div className="w-16 h-[2px] bg-[#4f6df0]/50 mb-10" />
+              </div>
+            </Reveal>
+
+            {/* Right — editorial body text */}
+            <Reveal delay={0.15}>
+              <div className="lg:pt-16">
+                <p className="text-lg md:text-xl text-white/50 font-light leading-[1.8] mb-8">
+                  Founded by systems architects, cryptographers, and
+                  computational researchers, Nexora was built to address the
+                  structural bottlenecks that hyperscale organizations encounter
+                  when off-the-shelf solutions reach their limits.
+                </p>
+                <p className="text-base text-white/30 font-light leading-[1.8] mb-12">
+                  From sub-millisecond execution planes to impenetrable
+                  zero-trust perimeters, our work underpins organizations
+                  where failure carries consequences measured in millions —
+                  or in lives. We build with mathematical rigor, test with
+                  adversarial discipline, and deliver with the precision
+                  our clients' missions demand.
+                </p>
+
+                {/* Metrics — woven into narrative */}
+                <div className="grid grid-cols-2 gap-8 pt-10 border-t border-white/[0.06]">
+                  {[
+                    { val: '150+', label: 'Projects shipped' },
+                    { val: '99.99%', label: 'Uptime SLA' },
+                    { val: '12', label: 'Countries' },
+                    { val: '24/7', label: 'Tier-3 support' },
+                  ].map((m) => (
+                    <div key={m.label}>
+                      <div className="text-3xl md:text-4xl font-bold text-white tracking-tight font-mono">
+                        {m.val}
+                      </div>
+                      <div className="text-xs text-white/30 mt-1 tracking-wide uppercase">
+                        {m.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Pull quote — full width, cinematic */}
+          <Reveal className="mt-32 md:mt-44">
+            <blockquote className="relative">
+              <div className="absolute -top-6 left-0 text-8xl font-serif text-[#4f6df0]/10 leading-none select-none">
+                "
+              </div>
+              <p className="text-2xl md:text-4xl lg:text-5xl font-light text-white/80 leading-[1.3] tracking-tight max-w-5xl">
+                We don't keep pace with the future —
+                <span className="text-white font-medium"> we set its specifications</span>
+                <span className="text-[#4f6df0]">.</span>
+              </p>
+            </blockquote>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          CONTACT — Minimal, confident
+          ══════════════════════════════════════════════════════════════════ */}
+      <section id="contact" className="relative py-32 md:py-44 border-t border-white/[0.04]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
+            <Reveal>
+              <div>
+                <p className="text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-[#7b8fea] mb-6">
+                  Start a conversation
+                </p>
+                <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.05]">
+                  Let's build
+                  <br />
+                  something real<span className="text-[#4f6df0]">.</span>
+                </h2>
+              </div>
             </Reveal>
 
             <Reveal delay={0.15}>
-              <a href="#contact" className="group block relative rounded-2xl overflow-hidden cursor-pointer">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80" alt="AI & Hardware" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.4s] ease-out" />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#04060c] via-[#04060c]/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-7 md:p-8">
-                  <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-[#7b8fea]/80 block mb-2.5">AI · Healthcare</span>
-                  <h3 className="text-lg md:text-xl font-bold text-white tracking-tight mb-2">Clinical document intelligence</h3>
-                  <p className="text-[13px] text-white/30 font-light max-w-sm leading-relaxed">
-                    Built a document processing pipeline that extracts structured data from
-                    unstructured clinical notes — replacing 40 hours of weekly manual review.
-                  </p>
-                </div>
-                <div className="absolute top-5 right-5 w-9 h-9 rounded-full border border-white/[0.06] group-hover:border-white/15 flex items-center justify-center transition-all duration-500">
-                  <ArrowUpRight size={14} className="text-white/15 group-hover:text-white transition-colors" />
-                </div>
-              </a>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════
-          ABOUT — asymmetric editorial
-          ════════════════════════════════════════════════════════ */}
-      <section id="about" className="relative py-28 md:py-36 border-t border-white/[0.04]">
-        <div className="max-w-[1320px] mx-auto px-6 md:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-20">
-            <div className="lg:col-span-2">
-              <Reveal>
-                <p className="text-[11px] font-medium tracking-[0.35em] uppercase text-[#7b8fea] mb-3">About</p>
-                <h2 className="text-3xl md:text-[2.8rem] font-bold tracking-tight text-white leading-[1.12]">
-                  Small team.
-                  <br />
-                  Hard problems.
-                </h2>
-              </Reveal>
-            </div>
-
-            <div className="lg:col-span-3">
-              <Reveal delay={0.1}>
-                <p className="text-[15px] md:text-base text-white/40 font-light leading-[1.85] mb-6">
-                  Nexora is a 45-person engineering consultancy. We started in 2019
-                  with three founders who were tired of watching good projects get
-                  buried under enterprise bureaucracy and vendor lock-in.
+              <div className="flex flex-col gap-6 lg:items-end">
+                <p className="text-base text-white/40 font-light max-w-md lg:text-right leading-relaxed">
+                  Tell us what you're trying to solve. We'll respond within
+                  24 hours with an honest assessment of whether we're the right fit.
                 </p>
-                <p className="text-[15px] md:text-base text-white/40 font-light leading-[1.85] mb-6">
-                  We're not a body shop and we're not an agency. We're engineers
-                  who embed with your team, understand the real constraints (not just
-                  the ones in the brief), and build systems that your own developers
-                  can maintain long after we've left.
-                </p>
-                <p className="text-[15px] md:text-base text-white/30 font-light leading-[1.85]">
-                  We say no to about 70% of inbound projects — not because we're
-                  exclusive, but because we only take work where we're genuinely
-                  confident we'll deliver something worth the investment.
-                </p>
-              </Reveal>
-
-              {/* Concrete, specific facts */}
-              <Reveal delay={0.2} className="mt-12 pt-10 border-t border-white/[0.05]">
-                <div className="grid grid-cols-3 gap-6">
-                  <div>
-                    <div className="text-2xl md:text-3xl font-bold text-white tracking-tight">45</div>
-                    <div className="text-[12px] text-white/25 mt-1.5 leading-snug">engineers<br />across 3 offices</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl md:text-3xl font-bold text-white tracking-tight">2019</div>
-                    <div className="text-[12px] text-white/25 mt-1.5 leading-snug">founded in<br />San Francisco</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl md:text-3xl font-bold text-white tracking-tight">~70%</div>
-                    <div className="text-[12px] text-white/25 mt-1.5 leading-snug">of our work is<br />repeat clients</div>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════
-          CONTACT
-          ════════════════════════════════════════════════════════ */}
-      <section id="contact" className="relative py-28 md:py-36 border-t border-white/[0.04]">
-        <div className="max-w-[1320px] mx-auto px-6 md:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20">
-            <Reveal>
-              <p className="text-[11px] font-medium tracking-[0.35em] uppercase text-[#7b8fea] mb-4">Contact</p>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white leading-[1.08]">
-                Tell us what you're
-                <br />
-                working on<span className="text-[#4f6df0]">.</span>
-              </h2>
-              <p className="mt-5 text-[14.5px] text-white/30 font-light max-w-md leading-[1.7]">
-                No pitch decks, no 12-step sales process. Just a conversation
-                about your problem and whether we're the right people to solve it.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <div className="flex flex-col gap-4 lg:pt-8">
-                <a href="mailto:hello@nexora.tech" className="group flex items-center justify-between px-5 py-4 rounded-xl border border-white/[0.05] hover:border-white/12 hover:bg-white/[0.015] transition-all duration-300">
-                  <div className="flex items-center gap-3">
-                    <Mail size={15} className="text-[#7b8fea]/60" />
-                    <span className="text-[14px] text-white/55 group-hover:text-white/80 transition-colors">hello@nexora.tech</span>
-                  </div>
-                  <ArrowUpRight size={14} className="text-white/10 group-hover:text-white/40 transition-colors" />
+                <a
+                  href="mailto:hello@nexora.tech"
+                  className="group inline-flex items-center gap-4 text-white"
+                >
+                  <span className="text-lg md:text-xl font-light tracking-wide group-hover:text-[#a0b4ff] transition-colors">
+                    hello@nexora.tech
+                  </span>
+                  <span className="w-12 h-12 rounded-full border border-white/20 group-hover:border-[#4f6df0] group-hover:bg-[#4f6df0]/10 flex items-center justify-center transition-all duration-500">
+                    <Mail size={16} />
+                  </span>
                 </a>
-                <a href="tel:+14155550134" className="group flex items-center justify-between px-5 py-4 rounded-xl border border-white/[0.05] hover:border-white/12 hover:bg-white/[0.015] transition-all duration-300">
-                  <div className="flex items-center gap-3">
-                    <Phone size={15} className="text-[#7b8fea]/60" />
-                    <span className="text-[14px] text-white/55 group-hover:text-white/80 transition-colors">+1 (415) 555-0134</span>
-                  </div>
-                  <ArrowUpRight size={14} className="text-white/10 group-hover:text-white/40 transition-colors" />
-                </a>
-                <div className="flex items-center gap-3 px-5 py-4 rounded-xl border border-white/[0.05]">
-                  <MapPin size={15} className="text-[#7b8fea]/60" />
-                  <span className="text-[14px] text-white/35">San Francisco · Zürich · Singapore</span>
-                </div>
               </div>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-white/[0.04] py-10">
-        <div className="max-w-[1320px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-5">
-          <div className="flex items-center gap-5">
+      {/* ══════════════════════════════════════════════════════════════════
+          FOOTER — Minimal
+          ══════════════════════════════════════════════════════════════════ */}
+      <footer className="border-t border-white/[0.04] py-12">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-6">
             <a href="#" className="flex items-baseline gap-1">
-              <span className="text-[13px] font-semibold tracking-[0.25em] uppercase text-white/40">Nexora</span>
+              <span className="text-sm font-semibold tracking-[0.3em] uppercase text-white/50">
+                Nexora
+              </span>
               <span className="w-1 h-1 rounded-full bg-[#4f6df0]" />
             </a>
-            <span className="text-[11px] text-white/12">© {new Date().getFullYear()} Nexora Technologies</span>
+            <span className="text-xs text-white/15">
+              © {new Date().getFullYear()} Nexora Technologies
+            </span>
           </div>
-          <div className="flex items-center gap-7 text-[11px] text-white/20">
+
+          <div className="flex items-center gap-8 text-xs text-white/25">
             {links.map((l) => (
-              <a key={l.label} href={l.href} className="hover:text-white/40 transition-colors">{l.label}</a>
+              <a
+                key={l.label}
+                href={l.href}
+                className="hover:text-white/50 transition-colors"
+              >
+                {l.label}
+              </a>
             ))}
-            <a href="#" className="hover:text-white/40 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-white/40 transition-colors">Terms</a>
+            <a href="#" className="hover:text-white/50 transition-colors">
+              Privacy
+            </a>
           </div>
         </div>
       </footer>
