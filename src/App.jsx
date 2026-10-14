@@ -9,6 +9,7 @@ import {
   LineChart, FileText, Layers, Play, ArrowLeft,
 } from 'lucide-react';
 import { divisions } from './data/servicesData';
+import DivisionStage from './components/DivisionStage';
 
 /* ─── Icon resolver ─── */
 const iconMap = {
@@ -48,407 +49,6 @@ function Marquee({ items, speed = 40 }) {
         {[...items, ...items].map((t, i) => <span key={i} className="shrink-0">{t}</span>)}
       </motion.div>
     </div>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════
-   CINEMATIC DIVISION EXPERIENCE (The Exact Theme)
-   ══════════════════════════════════════════════════════════ */
-function DivisionStage({ division, onClose, onSelectDivision }) {
-  const [activeSvcId, setActiveSvcId] = useState(division.services[0]?.id || null);
-
-  // Keyboard Escape listener
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
-
-  const handleEnquire = () => {
-    onClose();
-    setTimeout(() => {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-    }, 150);
-  };
-
-  const activeSvc = division.services.find(s => s.id === activeSvcId) || division.services[0];
-
-  // Specific theme configuration per division matching the user's reference mockup
-  const themeConfig = {
-    software: {
-      tag: 'SOFTWARE ENGINEERING',
-      headlinePart1: 'Engineering',
-      headlinePart2: 'Digital ',
-      headlineHighlight: 'Experiences.',
-      accentText: 'text-[#38bdf8]',
-      accentBg: 'bg-[#0284c7]',
-      accentBorder: 'border-[#38bdf8]',
-      accentGlow: 'shadow-[0_0_30px_rgba(56,189,248,0.4)]',
-      primaryBtnGradient: 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
-      secondaryActionText: 'See Our Work',
-      centerpieceImg: '/art-software.jpg',
-      footerWatermark: 'Code · Design · Build · Grow',
-      floatingCard: {
-        title: 'Database Schema',
-        code: 'table users { id: uuid, role: admin }',
-      },
-    },
-    cyber: {
-      tag: 'CYBERSECURITY',
-      headlinePart1: 'Stronger Security',
-      headlinePart2: 'for a ',
-      headlineHighlight: 'Safer Tomorrow.',
-      accentText: 'text-[#00f0ff]',
-      accentBg: 'bg-[#00d4cc]',
-      accentBorder: 'border-[#00f0ff]',
-      accentGlow: 'shadow-[0_0_30px_rgba(0,240,255,0.4)]',
-      primaryBtnGradient: 'linear-gradient(135deg, #00d4cc 0%, #0284c7 100%)',
-      secondaryActionText: 'Watch Overview',
-      centerpieceImg: '/art-cyber.jpg',
-      footerWatermark: 'Protect · Monitor · Secure · Defend',
-      floatingCard: {
-        title: 'Zero-Trust Vector',
-        code: 'PERIMETER HARDENED · 100% SECURE',
-      },
-    },
-    ai: {
-      tag: 'ARTIFICIAL INTELLIGENCE',
-      headlinePart1: 'Intelligent Solutions',
-      headlinePart2: 'for a ',
-      headlineHighlight: 'Smarter Tomorrow.',
-      accentText: 'text-[#c084fc]',
-      accentBg: 'bg-[#9333ea]',
-      accentBorder: 'border-[#c084fc]',
-      accentGlow: 'shadow-[0_0_30px_rgba(192,132,252,0.4)]',
-      primaryBtnGradient: 'linear-gradient(135deg, #9333ea 0%, #4f46e5 100%)',
-      secondaryActionText: 'Watch How It Works',
-      centerpieceImg: '/art-ai.jpg',
-      footerWatermark: 'Learn · Automate · Optimize · Scale',
-      floatingCard: {
-        title: 'Cognitive Engine',
-        code: 'NEURAL WEIGHTS CONVERGED · 99.8%',
-      },
-    },
-  }[division.id];
-
-  return (
-    <motion.div
-      key={division.id}
-      initial={{ opacity: 0, scale: 0.985 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.985 }}
-      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-0 z-[150] overflow-y-auto bg-[#03050a] text-white flex flex-col justify-between"
-    >
-      {/* ── Background Glow Atmospheres ── */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div
-          className="absolute -top-[20%] left-[20%] w-[65vw] h-[65vw] max-w-[800px] max-h-[800px] rounded-full blur-[100px] opacity-25"
-          style={{ background: division.accentColor }}
-        />
-        <div
-          className="absolute -bottom-[20%] right-[10%] w-[55vw] h-[55vw] max-w-[700px] max-h-[700px] rounded-full blur-[110px] opacity-20"
-          style={{ background: division.accentColor }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#03050a] via-transparent to-[#03050a]/90" />
-      </div>
-
-      {/* ── Top Header Bar ── */}
-      <header className="relative z-20 w-full max-w-[1500px] mx-auto px-6 md:px-12 pt-6 pb-4 flex items-center justify-between border-b border-white/[0.06] backdrop-blur-md">
-        {/* Logo */}
-        <div className="flex items-baseline gap-2">
-          <span className="text-xl font-bold tracking-[0.25em] uppercase text-white">Nexora</span>
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/40 hidden sm:inline">Technologies</span>
-        </div>
-
-        {/* Center Division Switcher */}
-        <div className="hidden lg:flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08]">
-          {divisions.map((d) => {
-            const isCurrent = d.id === division.id;
-            return (
-              <button
-                key={d.id}
-                onClick={() => onSelectDivision?.(d)}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 flex items-center gap-2 ${
-                  isCurrent
-                    ? 'text-white bg-white/[0.12] shadow-sm'
-                    : 'text-white/40 hover:text-white/80 hover:bg-white/[0.02]'
-                }`}
-                style={isCurrent ? { borderColor: `${d.accentColor}50` } : {}}
-              >
-                <span
-                  className="w-1.5 h-1.5 rounded-full"
-                  style={{ background: isCurrent ? d.accentColor : 'rgba(255,255,255,0.25)' }}
-                />
-                {d.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Right CTA & Close Buttons */}
-        <div className="flex items-center gap-4">
-          <button
-            onClick={handleEnquire}
-            className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider px-5 py-2 rounded-full border border-white/20 hover:border-white/50 text-white transition-all duration-300 hover:bg-white/[0.05]"
-          >
-            Get Started <ArrowRight size={13} />
-          </button>
-          <button
-            onClick={onClose}
-            className="flex items-center gap-1.5 text-xs text-white/50 hover:text-white px-3 py-1.5 rounded-full border border-white/10 hover:border-white/30 transition-all duration-300"
-            title="Press Escape to exit"
-          >
-            <span className="text-[11px] font-semibold text-white/35">ESC</span>
-            <X size={15} />
-          </button>
-        </div>
-      </header>
-
-      {/* ── Sub-navigation: Return to Services ── */}
-      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 pt-6">
-        <button
-          onClick={onClose}
-          className="group inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-white/50 hover:text-white transition-colors duration-300"
-        >
-          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
-          <span>Back to Services</span>
-        </button>
-      </div>
-
-      {/* ── Main 3-Column Experience ── */}
-      <main className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 py-8 lg:py-12 flex-1 flex flex-col justify-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-
-          {/* ════════════════════════════════════════
-              LEFT COLUMN: Title, Tagline & Action CTAs
-              ════════════════════════════════════════ */}
-          <div className="lg:col-span-4 space-y-6">
-            <motion.div
-              initial={{ opacity: 0, x: -24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              {/* Division tag with horizontal line */}
-              <div className="flex items-center gap-3 mb-5">
-                <span className="w-8 h-[2px] rounded-full" style={{ background: division.accentColor }} />
-                <span
-                  className="text-xs font-bold tracking-[0.2em] uppercase"
-                  style={{ color: division.accentColor }}
-                >
-                  {themeConfig.tag}
-                </span>
-              </div>
-
-              {/* Exact Styled Headline */}
-              <h1 className="text-3xl md:text-5xl xl:text-[3.25rem] font-extrabold tracking-tight text-white leading-[1.08]">
-                {themeConfig.headlinePart1}
-                <br />
-                {themeConfig.headlinePart2}
-                <span
-                  style={{ color: division.accentColor }}
-                  className="drop-shadow-[0_0_35px_rgba(56,189,248,0.45)]"
-                >
-                  {themeConfig.headlineHighlight}
-                </span>
-              </h1>
-
-              {/* Exact Supporting Text */}
-              <p className="mt-5 text-sm md:text-base text-white/60 font-normal leading-[1.8] max-w-md">
-                {division.supportingText}
-              </p>
-
-              {/* Action Buttons */}
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                {/* Primary Button */}
-                <button
-                  type="button"
-                  onClick={handleEnquire}
-                  className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-white px-6 py-3.5 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
-                  style={{
-                    background: themeConfig.primaryBtnGradient,
-                    boxShadow: `0 0 25px ${division.accentColor}40`,
-                  }}
-                >
-                  <span>Explore Our Services</span>
-                  <ArrowRight size={14} />
-                </button>
-
-                {/* Secondary Action */}
-                <button
-                  type="button"
-                  onClick={handleEnquire}
-                  className="inline-flex items-center gap-2.5 text-xs font-semibold text-white/70 hover:text-white px-4 py-3 rounded-full transition-colors group"
-                >
-                  <span className="w-7 h-7 rounded-full border border-white/20 group-hover:border-white/50 flex items-center justify-center transition-colors">
-                    <Play size={11} className="fill-white translate-x-0.5" />
-                  </span>
-                  <span>{themeConfig.secondaryActionText}</span>
-                </button>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* ════════════════════════════════════════
-              CENTER COLUMN: The Cinematic Artwork Centerpiece
-              ════════════════════════════════════════ */}
-          <div className="lg:col-span-4 flex items-center justify-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative w-full max-w-[440px] aspect-[4/3] rounded-3xl overflow-hidden border border-white/[0.12] shadow-[0_20px_60px_rgba(0,0,0,0.8)] backdrop-blur-md group"
-            >
-              {/* Centerpiece Image from Reference Theme */}
-              <img
-                src={themeConfig.centerpieceImg}
-                alt={division.label}
-                className="w-full h-full object-cover object-center filter contrast-[1.08] brightness-[0.95] group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
-
-              {/* Vignette fade around edges */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#03050a]/80 via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#03050a]/40 via-transparent to-[#03050a]/40" />
-
-              {/* Floating Glassmorphic HUD Badge (Top-Right) */}
-              <div className="absolute top-4 right-4 px-3.5 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/[0.12] shadow-lg flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: division.accentColor }} />
-                <span className="text-[11px] font-semibold tracking-wide uppercase text-white/90">
-                  {themeConfig.floatingCard.title}
-                </span>
-              </div>
-
-              {/* Active Division Pulse Indicator (Bottom-Left) */}
-              <div className="absolute bottom-4 left-4 px-3.5 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/[0.12] text-[10px] font-mono tracking-wider text-white/60">
-                {themeConfig.floatingCard.code}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* ════════════════════════════════════════
-              RIGHT COLUMN: Vertical Glassmorphic Service Cards
-              ════════════════════════════════════════ */}
-          <div className="lg:col-span-4 flex flex-col justify-center">
-            <motion.div
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="space-y-2.5 max-h-[560px] overflow-y-auto pr-2 custom-scrollbar"
-            >
-              {division.services.map((svc, i) => {
-                const isSelected = svc.id === activeSvcId;
-                return (
-                  <div
-                    key={svc.id}
-                    onClick={() => setActiveSvcId(svc.id)}
-                    className={`group cursor-pointer rounded-2xl p-4 transition-all duration-300 border ${
-                      isSelected
-                        ? 'bg-white/[0.07] shadow-xl backdrop-blur-xl'
-                        : 'bg-white/[0.025] hover:bg-white/[0.05] border-white/[0.06] hover:border-white/[0.15]'
-                    }`}
-                    style={
-                      isSelected
-                        ? {
-                            borderColor: `${division.accentColor}80`,
-                            boxShadow: `0 0 25px ${division.accentColor}20`,
-                          }
-                        : {}
-                    }
-                  >
-                    {/* Top Row: Icon, Number, Title & Arrow */}
-                    <div className="flex items-center gap-3.5 justify-between">
-                      <div className="flex items-center gap-3">
-                        {/* Jewel Icon Box */}
-                        <div
-                          className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300"
-                          style={{
-                            background: isSelected ? `${division.accentColor}25` : 'rgba(255,255,255,0.04)',
-                            color: isSelected ? division.accentColor : 'rgba(255,255,255,0.5)',
-                            border: `1px solid ${isSelected ? `${division.accentColor}50` : 'rgba(255,255,255,0.08)'}`,
-                          }}
-                        >
-                          <LIcon name={svc.icon} size={16} />
-                        </div>
-
-                        {/* Number */}
-                        <span className="text-xs font-semibold tracking-wider text-white/35 tabular-nums">
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-
-                        {/* Title */}
-                        <span className={`text-sm font-semibold tracking-tight transition-colors ${
-                          isSelected ? 'text-white' : 'text-white/70 group-hover:text-white'
-                        }`}>
-                          {svc.title}
-                        </span>
-                      </div>
-
-                      {/* Arrow */}
-                      <ArrowRight
-                        size={15}
-                        className={`transition-all duration-300 shrink-0 ${
-                          isSelected
-                            ? 'translate-x-1 opacity-100'
-                            : 'opacity-30 group-hover:opacity-75 group-hover:translate-x-0.5'
-                        }`}
-                        style={{ color: isSelected ? division.accentColor : '#ffffff' }}
-                      />
-                    </div>
-
-                    {/* Expanded details when selected */}
-                    <AnimatePresence>
-                      {isSelected && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.35 }}
-                          className="overflow-hidden mt-3 pt-3 border-t border-white/[0.08]"
-                        >
-                          <p className="text-xs text-white/60 font-normal leading-relaxed mb-3">
-                            {svc.desc}
-                          </p>
-                          <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-semibold uppercase tracking-wider text-white/35">
-                              Deliverable Scope Included
-                            </span>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleEnquire();
-                              }}
-                              className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider transition-colors hover:underline"
-                              style={{ color: division.accentColor }}
-                            >
-                              Enquire <ArrowUpRight size={12} />
-                            </button>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
-            </motion.div>
-          </div>
-
-        </div>
-      </main>
-
-      {/* ── Bottom Watermark Footer ── */}
-      <footer className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 py-5 flex items-center justify-between border-t border-white/[0.06] text-xs text-white/30">
-        <span className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full" style={{ background: division.accentColor }} />
-          <span>Nexora Technologies // Mission-Critical Digital Engineering</span>
-        </span>
-        <span className="tracking-widest uppercase font-semibold text-white/40 hidden sm:inline">
-          {themeConfig.footerWatermark}
-        </span>
-      </footer>
-    </motion.div>
   );
 }
 
@@ -522,7 +122,7 @@ function MainServiceCard({ division, index, onClick }) {
 
         {/* Content */}
         <div className="relative z-10 my-auto py-6">
-          <h3 className="text-2xl lg:text-3xl font-extrabold text-white tracking-tight leading-tight mb-3">
+          <h3 className="font-boska text-2xl lg:text-3xl font-normal text-white tracking-tight leading-tight mb-3">
             {division.label}
           </h3>
           <p className="text-sm text-white/60 font-normal leading-relaxed">
@@ -641,10 +241,9 @@ export default function App() {
       </AnimatePresence>
 
       {/* ── Full-Screen Division Stage Overlay ── */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {activeDivision && (
           <DivisionStage
-            key={activeDivision.id}
             division={activeDivision}
             onClose={() => setActiveDivision(null)}
             onSelectDivision={(d) => setActiveDivision(d)}
@@ -710,22 +309,20 @@ export default function App() {
           </div>
         </motion.div>
 
-        {/* Cinematic VFX layers */}
-        <div className="absolute top-[18%] inset-x-0 h-[2px] pointer-events-none z-[2] animate-beam"
-          style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(79,109,240,0.1) 20%, rgba(145,195,255,0.85) 68%, rgba(255,255,255,0.95) 70%, rgba(145,195,255,0.85) 72%, rgba(79,109,240,0.1) 80%, transparent 100%)', boxShadow: '0 0 35px 2px rgba(79,109,240,0.65)' }} />
+        {/* Cinematic VFX layers — Refined, seamless, zero horizontal lines or blurry seams */}
         <div className="absolute top-[13%] right-[29%] w-44 h-44 md:w-64 md:h-64 rounded-full pointer-events-none z-[2] animate-flare"
-          style={{ background: 'radial-gradient(circle, rgba(210,235,255,0.6) 0%, rgba(110,150,255,0.25) 35%, transparent 70%)', filter: 'blur(20px)' }} />
-        <div className="absolute top-[5%] inset-x-[-20%] h-80 pointer-events-none z-[1] animate-aurora"
-          style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(79,109,240,0.18) 0%, rgba(56,189,248,0.08) 45%, transparent 70%)', filter: 'blur(40px)' }} />
+          style={{ background: 'radial-gradient(circle, rgba(210,235,255,0.45) 0%, rgba(110,150,255,0.18) 35%, transparent 70%)', filter: 'blur(25px)' }} />
+        <div className="absolute top-[5%] inset-x-[-10%] h-80 pointer-events-none z-[1] animate-aurora"
+          style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(79,109,240,0.14) 0%, rgba(56,189,248,0.05) 45%, transparent 70%)', filter: 'blur(45px)' }} />
         <div className="absolute top-[12%] right-[11%] w-1.5 h-1.5 rounded-full bg-white animate-star-1 pointer-events-none z-[2] shadow-[0_0_12px_#fff]" />
         <div className="absolute top-[17%] right-[15%] w-1 h-1 rounded-full bg-[#91a7ff] animate-star-2 pointer-events-none z-[2] shadow-[0_0_9px_#91a7ff]" />
         <div className="absolute top-[40%] right-[28%] w-1 h-1 rounded-full bg-white animate-star-1 pointer-events-none z-[2] shadow-[0_0_8px_#fff]" />
         <div className="absolute top-[35%] left-[21%] w-1 h-1 rounded-full bg-[#a0b4ff] animate-star-2 pointer-events-none z-[2] shadow-[0_0_8px_#a0b4ff]" />
-        <div className="absolute bottom-[26%] inset-x-0 h-44 pointer-events-none z-[2] opacity-70"
-          style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(255,175,120,0.16) 0%, rgba(79,109,240,0.06) 50%, transparent 80%)', filter: 'blur(15px)' }} />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#030408] via-[#030408]/30 to-transparent z-[3]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#030408]/85 via-transparent to-transparent z-[3]" />
-        <div className="absolute bottom-0 inset-x-0 h-44 bg-gradient-to-t from-[#030408] to-transparent z-[3]" />
+
+        {/* Seamless multi-stop background transition with zero visible banding */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#030408] via-[#030408]/40 to-transparent z-[3]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#030408]/80 via-transparent to-transparent z-[3]" />
+        <div className="absolute bottom-0 inset-x-0 h-36 bg-gradient-to-t from-[#030408] via-[#030408]/85 to-transparent z-[3]" />
 
         {/* Hero headline and statement */}
         <motion.div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 pb-20 md:pb-28" style={{ opacity: heroOpacity }}>
@@ -739,9 +336,10 @@ export default function App() {
             <span className="text-xs tracking-wider uppercase text-white/40 hidden sm:inline font-medium">Next-Gen Systems & Defense</span>
           </motion.div>
 
-          <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(2.8rem,7.5vw,6.8rem)] font-extrabold leading-[0.92] tracking-[-0.035em] text-white max-w-4xl">
-            Building what<br />comes next<span className="text-[#4f6df0]">.</span>
+          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="font-boska text-[clamp(3.2rem,8.5vw,7.4rem)] font-normal leading-[0.93] tracking-[-0.025em] text-white max-w-4xl">
+            Building what<br />
+            <span className="italic font-light text-[#91a7ff]">comes</span> next<span className="text-[#4f6df0]">.</span>
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.8 }}
@@ -787,9 +385,9 @@ export default function App() {
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 md:mb-24">
             <Reveal>
-              <h2 className="text-3xl md:text-5xl lg:text-[3.5rem] font-extrabold tracking-[-0.03em] text-white leading-[1.04] max-w-xl">
+              <h2 className="font-boska text-3xl md:text-5xl lg:text-[3.5rem] font-normal tracking-tight text-white leading-[1.04] max-w-xl">
                 Three disciplines.<br />
-                <span className="text-white/40 font-light">One unified standard.</span>
+                <span className="text-white/40 italic font-light">One unified standard.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.12}>
@@ -822,7 +420,7 @@ export default function App() {
             <div className="flex items-end justify-between mb-16 md:mb-24">
               <div>
                 <p className="text-xs font-semibold tracking-wider uppercase text-[#7b8fea] mb-4">Selected Work</p>
-                <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-[-0.03em] text-white leading-[1.05]">Case Studies</h2>
+                <h2 className="font-boska text-3xl md:text-5xl lg:text-6xl font-normal tracking-tight text-white leading-[1.05]">Case Studies</h2>
               </div>
               <a href="#contact" className="hidden md:inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-white/50 hover:text-white transition-colors">
                 View all <ArrowRight size={14} />
@@ -902,7 +500,7 @@ export default function App() {
             <Reveal>
               <div>
                 <p className="text-xs font-semibold tracking-wider uppercase text-[#7b8fea] mb-8">About Nexora</p>
-                <h2 className="text-3xl md:text-5xl lg:text-[3.5rem] font-extrabold tracking-[-0.03em] text-white leading-[1.08] mb-10">
+                <h2 className="font-boska text-3xl md:text-5xl lg:text-[3.5rem] font-normal tracking-tight text-white leading-[1.08] mb-10">
                   We exist to solve problems most firms won't attempt.
                 </h2>
                 <div className="w-16 h-[2px] bg-[#4f6df0]/50" />
@@ -931,8 +529,8 @@ export default function App() {
           <Reveal className="mt-28 md:mt-36">
             <blockquote className="relative">
               <div className="absolute -top-6 left-0 text-8xl font-serif text-[#4f6df0]/10 leading-none select-none">"</div>
-              <p className="text-2xl md:text-4xl lg:text-5xl font-light text-white/85 leading-[1.3] tracking-tight max-w-5xl">
-                We don't keep pace with the future —<span className="text-white font-semibold"> we set its specifications</span><span className="text-[#4f6df0]">.</span>
+              <p className="font-boska text-2xl md:text-4xl lg:text-5xl font-normal text-white/85 leading-[1.3] tracking-tight max-w-5xl">
+                We don't keep pace with the future —<span className="italic font-light text-white"> we set its specifications</span><span className="text-[#4f6df0]">.</span>
               </p>
             </blockquote>
           </Reveal>
@@ -948,8 +546,8 @@ export default function App() {
             <Reveal>
               <div>
                 <p className="text-xs font-semibold tracking-wider uppercase text-[#7b8fea] mb-6">Start a Conversation</p>
-                <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-[-0.035em] text-white leading-[1.02]">
-                  Let's build<br />something real<span className="text-[#4f6df0]">.</span>
+                <h2 className="font-boska text-4xl md:text-6xl lg:text-7xl font-normal tracking-tight text-white leading-[1.02]">
+                  Let's build<br /><span className="italic font-light text-[#91a7ff]">something</span> real<span className="text-[#4f6df0]">.</span>
                 </h2>
               </div>
             </Reveal>
