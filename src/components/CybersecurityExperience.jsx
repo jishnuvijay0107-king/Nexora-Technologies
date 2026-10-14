@@ -1,313 +1,370 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  Shield, ShieldAlert, Wrench, Server, Lock, MailWarning,
-  Network, GraduationCap, Cpu, FileCheck2, ArrowRight,
-  ArrowUpRight, Play, Activity, AlertTriangle
+  Shield, ArrowRight, ArrowUpRight, Play, Activity,
+  CheckCircle2, AlertTriangle, Lock, Cpu
 } from 'lucide-react';
 
-const iconMap = {
-  ShieldAlert, Wrench, Server, Lock, MailWarning,
-  Network, GraduationCap, Cpu, FileCheck2,
-};
-
-function SecIcon({ name, size = 18, className = '' }) {
-  const C = iconMap[name] || Shield;
-  return <C size={size} className={className} />;
-}
-
 export default function CybersecurityExperience({ division, onEnquire }) {
-  const [activeSvcId, setActiveSvcId] = useState(division.services[0]?.id || 'cyber-svc');
-  const [defenseMode, setDefenseMode] = useState('shield'); // 'shield' | 'telemetry'
-
+  const [activeSvcId, setActiveSvcId] = useState('sec-assess');
   const services = division.services;
+  const currentService = services.find((s) => s.id === activeSvcId) || services[0];
+
+  // Editorial intelligence & verified deliverables for each of the 9 disciplines
+  const serviceIntelligence = {
+    'cyber-svc': {
+      category: 'Institutional Advisory',
+      vector: 'Attack Surface Reduction & Threat Hardening',
+      framework: 'NIST CSF 2.0 / ISO 27001 Advisory',
+      deliverables: [
+        'Security posture analysis & organizational maturity roadmap',
+        'Identity & access management governance (IAM) review',
+        'Defensive control implementation & boundary hardening',
+        'Incident readiness advisory and response playbooks',
+      ],
+    },
+    'web-maint': {
+      category: 'Operational Resilience',
+      vector: 'Unpatched Exploit Mitigation & System Uptime',
+      framework: 'Proactive Patch Management Standards',
+      deliverables: [
+        'Automated scheduled backups & disaster recovery validation',
+        'Core framework & third-party dependency security patching',
+        'Continuous uptime & anomaly telemetry monitoring',
+        'Configuration drift detection and error mitigation',
+      ],
+    },
+    'it-consult': {
+      category: 'Infrastructure Strategy',
+      vector: 'Architectural Flaw Elimination',
+      framework: 'Zero-Trust Architecture Principles',
+      deliverables: [
+        'Enterprise IT security architecture blueprint design',
+        'Secure multi-environment migration strategies',
+        'Vendor technology risk and compliance assessment',
+        'Operational efficiency & security tooling alignment',
+      ],
+    },
+    'sec-assess': {
+      category: 'Penetration & Flaw Audit',
+      vector: 'OWASP Top 10 & CWE Weakness Discovery',
+      framework: 'OWASP Web Security Testing Guide (WSTG)',
+      deliverables: [
+        'Authorized automated & manual penetration testing',
+        'Authentication bypass & injection vulnerability analysis',
+        'Cryptographic & SSL/TLS cipher evaluation',
+        'Prioritized CVSS 3.1 remediation action plans',
+      ],
+    },
+    'phishing': {
+      category: 'Social Engineering Defense',
+      vector: 'Domain Spoofing & Malicious Payload Neutralization',
+      framework: 'DMARC / SPF / DKIM & Behavioral Analysis',
+      deliverables: [
+        'Automated suspicious URL analysis algorithms',
+        'Email gateway security rule calibration',
+        'Domain spoofing & brand impersonation detection',
+        'Suspicious message triage and heuristic evaluation',
+      ],
+    },
+    'network': {
+      category: 'Perimeter Auditing',
+      vector: 'Exposed Service & Lateral Movement Prevention',
+      framework: 'CIS Network Security Benchmarks',
+      deliverables: [
+        'Perimeter firewall rule and port exposure review',
+        'Internal segmentation and subnet isolation audit',
+        'VPN and remote access security evaluations',
+        'Network telemetry and log visibility assessment',
+      ],
+    },
+    'training': {
+      category: 'Human Resilience',
+      vector: 'Credential Harvesting & Social Engineering Defense',
+      framework: 'Behavioral Security Protocols',
+      deliverables: [
+        'Realistic simulated phishing campaign exercises',
+        'Executive & workforce secure data-handling training',
+        'Password manager & MFA best practice adoption',
+        'Clear incident reporting guidelines for employees',
+      ],
+    },
+    'ai-sec': {
+      category: 'AI Application Security',
+      vector: 'Prompt Injection & Data Exfiltration Defense',
+      framework: 'OWASP Top 10 for LLM Applications',
+      deliverables: [
+        'Direct and indirect prompt-injection threat modeling',
+        'Retrieval-Augmented Generation (RAG) data access guardrails',
+        'Model input sanitization and output filter validation',
+        'Agentic tool-call permission boundary enforcement',
+      ],
+    },
+    'risk-report': {
+      category: 'Risk Governance',
+      vector: 'Actionable Prioritization of Organizational Risks',
+      framework: 'Quantitative Risk Assessment (FAIR / CVSS)',
+      deliverables: [
+        'Executive summaries tailored for leadership & board review',
+        'Detailed engineering remediation specifications',
+        'Defect severity ranking and risk impact matrices',
+        'Post-remediation verification and re-testing validation',
+      ],
+    },
+  }[currentService.id];
 
   return (
-    <div className="w-full max-w-[1500px] mx-auto px-6 md:px-12 py-8 lg:py-12 flex-1 flex flex-col justify-center">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-
-        {/* ── Left Column: Editorial Headline & Narrative ── */}
-        <div className="lg:col-span-4 space-y-6">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.45 }}
-          >
-            {/* Tagline indicator */}
-            <div className="flex items-center gap-3 mb-5">
-              <span className="w-8 h-[2px] rounded-full bg-[#00f0ff]" />
-              <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#00f0ff]">
-                CYBERSECURITY
-              </span>
-            </div>
-
-            {/* Editorial Boska Headline */}
-            <h1 className="font-boska text-3xl md:text-5xl xl:text-[3.25rem] font-normal tracking-tight text-white leading-[1.08]">
-              Stronger Security
-              <br />
-              <span className="italic font-light text-[#00f0ff]">for a </span>
-              <span className="text-[#00f0ff] drop-shadow-[0_0_35px_rgba(0,240,255,0.45)]">
-                Safer Tomorrow.
-              </span>
-            </h1>
-
-            {/* Verbatim Supporting Narrative */}
-            <p className="mt-5 text-sm md:text-base text-white/60 font-normal leading-[1.8] max-w-md">
-              {division.supportingText}
-            </p>
-
-            {/* Action Buttons */}
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <button
-                type="button"
-                onClick={onEnquire}
-                className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-black px-6 py-3.5 rounded-full shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
-                style={{
-                  background: 'linear-gradient(135deg, #00d4cc 0%, #0284c7 100%)',
-                  boxShadow: '0 0 25px rgba(0,240,255,0.4)',
-                }}
-              >
-                <span>Explore Our Services</span>
-                <ArrowRight size={14} />
-              </button>
-
-              <button
-                type="button"
-                onClick={onEnquire}
-                className="inline-flex items-center gap-2.5 text-xs font-semibold text-white/70 hover:text-white px-4 py-3 rounded-full transition-colors group cursor-pointer"
-              >
-                <span className="w-7 h-7 rounded-full border border-white/20 group-hover:border-white/50 flex items-center justify-center transition-colors">
-                  <Play size={11} className="fill-white translate-x-0.5" />
-                </span>
-                <span>Watch Overview</span>
-              </button>
-            </div>
-          </motion.div>
+    <div className="w-full max-w-[1500px] mx-auto px-6 md:px-12 py-8 lg:py-14 flex flex-col justify-between">
+      {/* ── Editorial Masthead ── */}
+      <section className="mb-12 lg:mb-16 border-b border-white/[0.08] pb-10">
+        <div className="flex flex-wrap items-center gap-3 mb-6">
+          <span className="w-8 h-[2px] bg-[#00f0ff]" />
+          <span className="text-xs font-mono font-bold tracking-[0.25em] uppercase text-[#00f0ff]">
+            CYBERSECURITY DIVISION // MISSION-CRITICAL DEFENSE
+          </span>
         </div>
 
-        {/* ── Center Column: Living Holographic Cryptographic Defense Engine (NO STATIC PICTURE) ── */}
-        <div className="lg:col-span-4 flex items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="relative w-full max-w-[460px] aspect-[4/3.4] rounded-3xl overflow-hidden border border-white/[0.14] bg-[#020713]/90 shadow-[0_25px_60px_rgba(0,0,0,0.8)] backdrop-blur-xl flex flex-col justify-between p-6"
-          >
-            {/* Atmospheric Cyan Glow — Pure CSS & SVG, zero static images */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full bg-gradient-to-tr from-[#00d4cc]/35 via-[#00f0ff]/20 to-transparent blur-[70px] animate-pulse" />
-              <div className="absolute inset-0 bg-[radial-gradient(#00f0ff_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.05]" />
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+          <div className="lg:col-span-8">
+            <h1 className="font-boska text-4xl sm:text-6xl lg:text-7xl xl:text-[5.25rem] font-normal tracking-tight text-white leading-[1.03]">
+              Stronger Security{' '}
+              <span className="italic font-light text-[#00f0ff]">for a</span>{' '}
+              Safer Tomorrow.
+            </h1>
+            <p className="mt-5 text-base md:text-lg text-white/60 font-normal leading-relaxed max-w-2xl">
+              {division.supportingText}
+            </p>
+          </div>
 
-            {/* Top HUD bar with mode switch */}
-            <div className="relative z-10 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-pulse shadow-[0_0_8px_#00f0ff]" />
-                <span className="text-[11px] font-bold tracking-wider uppercase text-white/90">
-                  Zero-Trust Vector
-                </span>
-              </div>
-              <div className="flex items-center gap-1 bg-white/[0.04] p-1 rounded-full border border-white/[0.08]">
-                <button
-                  onClick={() => setDefenseMode('shield')}
-                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold transition-all cursor-pointer ${
-                    defenseMode === 'shield'
-                      ? 'bg-[#00f0ff]/25 text-[#a5f3fc] border border-[#00f0ff]/50'
-                      : 'text-white/40 hover:text-white'
-                  }`}
-                >
-                  Radar Shield
-                </button>
-                <button
-                  onClick={() => setDefenseMode('telemetry')}
-                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold transition-all cursor-pointer ${
-                    defenseMode === 'telemetry'
-                      ? 'bg-[#00f0ff]/25 text-[#a5f3fc] border border-[#00f0ff]/50'
-                      : 'text-white/40 hover:text-white'
-                  }`}
-                >
-                  Governance
-                </button>
-              </div>
+          <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-4 lg:items-end">
+            <button
+              onClick={onEnquire}
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-black bg-[#00f0ff] hover:bg-[#67e8f9] transition-all duration-300 shadow-[0_0_30px_rgba(0,240,255,0.35)] hover:scale-105 cursor-pointer"
+            >
+              <span>Explore Our Services</span>
+              <ArrowRight size={14} />
+            </button>
+            <div className="flex items-center gap-4 text-xs font-mono text-white/40">
+              <span>ZERO-TRUST STANDARD</span>
+              <span>·</span>
+              <span>OWASP WSTG ALIGNED</span>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Center Dynamic Visual: Interactive Radar Shield or Telemetry */}
-            <div className="relative z-10 my-auto py-2 flex items-center justify-center">
-              {defenseMode === 'shield' ? (
-                <div className="relative w-full h-44 flex items-center justify-center">
-                  <svg className="w-full h-full" viewBox="0 0 360 170" fill="none">
+      {/* ── Editorial 2-Column Split: Pure Typographic Ledger + Dynamic Defense Console ── */}
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        {/* Left Column: Editorial Capability Ledger (9 Disciplines, Clean Hairlines, NO BOX CARDS) */}
+        <div className="lg:col-span-6 space-y-0 border-t border-white/[0.08]">
+          <div className="flex items-center justify-between py-3 text-xs font-mono tracking-wider uppercase text-white/35">
+            <span>Discipline Index</span>
+            <span>09 Core Practices</span>
+          </div>
+
+          {services.map((svc, i) => {
+            const isSelected = svc.id === activeSvcId;
+            return (
+              <div
+                key={svc.id}
+                onClick={() => setActiveSvcId(svc.id)}
+                className={`group cursor-pointer transition-all duration-200 border-b border-white/[0.08] py-4.5 px-2 ${
+                  isSelected ? 'bg-white/[0.02]' : 'hover:bg-white/[0.01]'
+                }`}
+              >
+                {/* Row Header */}
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-baseline gap-4">
+                    <span className="text-xs font-mono font-medium tracking-widest text-white/35 tabular-nums">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <h3 className={`text-base sm:text-lg font-medium tracking-tight transition-colors ${
+                      isSelected ? 'text-white' : 'text-white/70 group-hover:text-white'
+                    }`}>
+                      {svc.title}
+                    </h3>
+                  </div>
+
+                  <span className={`text-sm font-mono transition-transform duration-300 ${
+                    isSelected ? 'text-[#00f0ff] rotate-45' : 'text-white/30 group-hover:text-white/60'
+                  }`}>
+                    +
+                  </span>
+                </div>
+
+                {/* Expanded Editorial Body */}
+                <AnimatePresence>
+                  {isSelected && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden pt-3 pl-8"
+                    >
+                      <p className="text-sm text-white/60 font-normal leading-[1.75] max-w-xl mb-4">
+                        {svc.desc}
+                      </p>
+                      <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-white/[0.05]">
+                        <span className="text-[11px] font-mono tracking-wider uppercase text-white/35">
+                          Scope Verified // Authorized Protocol
+                        </span>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onEnquire();
+                          }}
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#00f0ff] hover:text-white transition-colors cursor-pointer"
+                        >
+                          Inquire About Scope <ArrowUpRight size={13} />
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Right Column: Dynamic Cryptographic Threat Governance Console */}
+        <div className="lg:col-span-6 lg:sticky lg:top-28">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentService.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.3 }}
+              className="rounded-3xl border border-white/[0.12] bg-[#020713]/90 backdrop-blur-2xl p-7 sm:p-9 shadow-[0_20px_60px_rgba(0,0,0,0.6)] relative overflow-hidden"
+            >
+              {/* Subtle background glow */}
+              <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#00f0ff]/10 blur-[90px] pointer-events-none" />
+
+              {/* Console Header */}
+              <div className="relative z-10 flex items-center justify-between pb-6 border-b border-white/[0.08]">
+                <div>
+                  <span className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-[#00f0ff] block mb-1">
+                    {serviceIntelligence.category}
+                  </span>
+                  <h2 className="font-boska text-2xl sm:text-3xl font-normal text-white tracking-tight">
+                    {currentService.title}
+                  </h2>
+                </div>
+
+                <div className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[10px] font-mono text-white/60">
+                  DEFENSE POSTURE: HARDENED
+                </div>
+              </div>
+
+              {/* Procedural Cryptographic Shield Visual (NO STATIC PICTURE) */}
+              <div className="relative z-10 py-6 border-b border-white/[0.08]">
+                <div className="relative w-full h-40 flex items-center justify-center">
+                  <svg className="w-full h-full" viewBox="0 0 340 160" fill="none">
                     {/* Concentric Defense Radar Orbit Rings */}
-                    <circle cx="180" cy="85" r="70" stroke="rgba(0, 240, 255, 0.15)" strokeWidth="1" strokeDasharray="4 4" />
-                    <circle cx="180" cy="85" r="50" stroke="rgba(0, 240, 255, 0.25)" strokeWidth="1.2" />
-                    <circle cx="180" cy="85" r="30" stroke="rgba(0, 240, 255, 0.35)" strokeWidth="1.5" />
+                    <circle cx="170" cy="80" r="65" stroke="rgba(0, 240, 255, 0.15)" strokeWidth="1" strokeDasharray="3 3" />
+                    <circle cx="170" cy="80" r="45" stroke="rgba(0, 240, 255, 0.25)" strokeWidth="1.2" />
+                    <circle cx="170" cy="80" r="25" stroke="rgba(0, 240, 255, 0.35)" strokeWidth="1.5" />
 
                     {/* Scanning Radar Sweep Line */}
-                    <line x1="180" y1="85" x2="250" y2="85" stroke="#00f0ff" strokeWidth="1.5" opacity="0.7">
+                    <line x1="170" y1="80" x2="235" y2="80" stroke="#00f0ff" strokeWidth="1.5" opacity="0.7">
                       <animateTransform
                         attributeName="transform"
                         type="rotate"
-                        from="0 180 85"
-                        to="360 180 85"
-                        dur="4s"
+                        from="0 170 80"
+                        to="360 170 80"
+                        dur="4.5s"
                         repeatCount="indefinite"
                       />
                     </line>
 
                     {/* Central Cryptographic Shield Core */}
                     <path
-                      d="M180 62 L198 70 V88 C198 100 180 108 180 108 C180 108 162 100 162 88 V70 Z"
-                      fill="#031526"
+                      d="M170 58 L188 66 V84 C188 96 170 104 170 104 C170 104 152 96 152 84 V66 Z"
+                      fill="#020d1c"
                       stroke="#00f0ff"
                       strokeWidth="2"
                     />
                     <path
-                      d="M180 72 V98 M172 82 L180 72 L188 82"
+                      d="M170 68 V94 M162 78 L170 68 L178 78"
                       stroke="#00f0ff"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
 
-                    {/* Perimeter Defense Nodes */}
-                    <g fill="#020713" stroke="#00f0ff" strokeWidth="1.5">
-                      <circle cx="110" cy="85" r="5" />
-                      <circle cx="250" cy="85" r="5" />
-                      <circle cx="180" cy="15" r="5" />
-                      <circle cx="180" cy="155" r="5" />
-                    </g>
-                    <g fill="#00f0ff">
-                      <circle cx="110" cy="85" r="2.5" />
-                      <circle cx="250" cy="85" r="2.5" />
-                      <circle cx="180" cy="15" r="2.5" />
-                      <circle cx="180" cy="155" r="2.5" />
-                    </g>
+                    {/* Defense Nodes */}
+                    <circle cx="105" cy="80" r="4" fill="#00f0ff" />
+                    <circle cx="235" cy="80" r="4" fill="#00f0ff" />
+                    <circle cx="170" cy="15" r="4" fill="#00f0ff" />
+                    <circle cx="170" cy="145" r="4" fill="#00f0ff" />
                   </svg>
                 </div>
-              ) : (
-                /* Live Governance & Compliance Parameters */
-                <div className="w-full space-y-3 py-1 font-mono text-xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-white/40">Audit Standard</span>
-                    <span className="text-[#00f0ff]">OWASP WSTG v4.2</span>
+              </div>
+
+              {/* Verified Intelligence & Deliverables */}
+              <div className="relative z-10 py-6 space-y-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-2xl bg-white/[0.025] border border-white/[0.06]">
+                    <span className="text-[10px] uppercase font-mono font-bold text-white/35 block mb-1">
+                      Target Threat Vector
+                    </span>
+                    <span className="text-sm font-semibold text-[#00f0ff]">
+                      {serviceIntelligence.vector}
+                    </span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-white/40">Framework Alignment</span>
-                    <span className="text-white/90">NIST CSF 2.0 / ISO 27001</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-white/40">Risk Metric Matrix</span>
-                    <span className="text-[#a5f3fc]">CVSS v3.1 Scoring</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-white/40">Assessment Scope</span>
-                    <span className="text-white/90">Authorized Systems Only</span>
+                  <div className="p-4 rounded-2xl bg-white/[0.025] border border-white/[0.06]">
+                    <span className="text-[10px] uppercase font-mono font-bold text-white/35 block mb-1">
+                      Compliance Standard
+                    </span>
+                    <span className="text-sm font-semibold text-white/90">
+                      {serviceIntelligence.framework}
+                    </span>
                   </div>
                 </div>
-              )}
-            </div>
 
-            {/* Bottom Telemetry Bar */}
-            <div className="relative z-10 pt-3 border-t border-white/[0.08] flex items-center justify-between text-[10px] font-mono text-white/50">
-              <span className="flex items-center gap-1.5">
-                <Activity size={12} className="text-[#00f0ff]" />
-                PERIMETER HARDENED · 100% SECURE
-              </span>
-              <span className="text-white/35">POLICY: STRICT</span>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* ── Right Column: 9 Interactive Cybersecurity Services ── */}
-        <div className="lg:col-span-4 flex flex-col justify-center">
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.45 }}
-            className="space-y-2.5 max-h-[560px] overflow-y-auto pr-2 custom-scrollbar"
-          >
-            {services.map((svc, i) => {
-              const isSelected = svc.id === activeSvcId;
-              return (
-                <div
-                  key={svc.id}
-                  onClick={() => setActiveSvcId(svc.id)}
-                  className={`group cursor-pointer rounded-2xl p-4 transition-all duration-300 border ${
-                    isSelected
-                      ? 'bg-white/[0.07] border-[#00f0ff]/60 shadow-[0_0_25px_rgba(0,240,255,0.2)]'
-                      : 'bg-white/[0.025] hover:bg-white/[0.05] border-white/[0.06] hover:border-white/[0.15]'
-                  }`}
-                >
-                  <div className="flex items-center gap-3.5 justify-between">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300"
-                        style={{
-                          background: isSelected ? 'rgba(0,240,255,0.2)' : 'rgba(255,255,255,0.04)',
-                          color: isSelected ? '#00f0ff' : 'rgba(255,255,255,0.5)',
-                          border: `1px solid ${isSelected ? 'rgba(0,240,255,0.5)' : 'rgba(255,255,255,0.08)'}`,
-                        }}
-                      >
-                        <SecIcon name={svc.icon} size={16} />
+                <div>
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-white/40 mb-3">
+                    Verification Deliverables:
+                  </h4>
+                  <div className="space-y-2">
+                    {serviceIntelligence.deliverables.map((item, i) => (
+                      <div key={i} className="flex items-start gap-2.5 text-xs text-white/75 leading-relaxed">
+                        <span className="text-[#00f0ff] font-mono mt-0.5">—</span>
+                        <span>{item}</span>
                       </div>
-
-                      <span className="text-xs font-semibold tracking-wider text-white/35 tabular-nums">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-
-                      <span className={`text-sm font-semibold tracking-tight transition-colors ${
-                        isSelected ? 'text-white' : 'text-white/70 group-hover:text-white'
-                      }`}>
-                        {svc.title}
-                      </span>
-                    </div>
-
-                    <ArrowRight
-                      size={15}
-                      className={`transition-all duration-300 shrink-0 ${
-                        isSelected
-                          ? 'text-[#00f0ff] translate-x-1 opacity-100'
-                          : 'text-white/30 group-hover:text-white/75 group-hover:translate-x-0.5'
-                      }`}
-                    />
+                    ))}
                   </div>
-
-                  <AnimatePresence>
-                    {isSelected && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className="overflow-hidden mt-3 pt-3 border-t border-white/[0.08]"
-                      >
-                        <p className="text-xs text-white/65 font-normal leading-relaxed mb-3">
-                          {svc.desc}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-semibold uppercase tracking-wider text-white/35">
-                            Authorized Assessment Protocol Included
-                          </span>
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onEnquire();
-                            }}
-                            className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#00f0ff] hover:underline cursor-pointer"
-                          >
-                            Enquire <ArrowUpRight size={12} />
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
-              );
-            })}
-          </motion.div>
-        </div>
 
-      </div>
+                {/* Transparency Disclaimer */}
+                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] text-[11px] text-white/45 flex items-center gap-2">
+                  <AlertTriangle size={13} className="text-[#00f0ff]/70 shrink-0" />
+                  <span>
+                    All assessments conducted strictly on authorized scopes under written engagement.
+                  </span>
+                </div>
+              </div>
+
+              {/* Bottom Consultation Trigger */}
+              <div className="relative z-10 pt-5 border-t border-white/[0.08] flex items-center justify-between gap-4">
+                <span className="text-xs text-white/40 font-mono">
+                  Ready to fortify this perimeter?
+                </span>
+                <button
+                  type="button"
+                  onClick={onEnquire}
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full bg-white/[0.08] hover:bg-[#00f0ff] text-white hover:text-black transition-all duration-300 border border-white/10 hover:border-[#00f0ff] cursor-pointer"
+                >
+                  <span>Initiate Consultation</span>
+                  <ArrowUpRight size={14} />
+                </button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </section>
     </div>
   );
 }
