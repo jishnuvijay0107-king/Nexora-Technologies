@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Sparkles, BarChart3, MessageSquareCode, Workflow,
-  LineChart, FileText, Layers, ArrowRight, ArrowUpRight, Play
+  LineChart, FileText, Layers, ArrowRight, ArrowUpRight, Play,
+  Cpu, Activity, Zap, CheckCircle2
 } from 'lucide-react';
 
 const iconMap = {
@@ -17,6 +18,8 @@ function AIIcon({ name, size = 18, className = '' }) {
 
 export default function AIExperience({ division, onEnquire }) {
   const [activeSvcId, setActiveSvcId] = useState(division.services[0]?.id || 'biz-auto');
+  const [neuralMode, setNeuralMode] = useState('network'); // 'network' | 'metrics'
+
   const services = division.services;
   const activeSvc = services.find(s => s.id === activeSvcId) || services[0];
 
@@ -83,33 +86,160 @@ export default function AIExperience({ division, onEnquire }) {
           </motion.div>
         </div>
 
-        {/* ── Center Column: Neural Centerpiece Artwork ── */}
+        {/* ── Center Column: Living Generative Cognitive Intelligence Engine (NO STATIC PICTURE) ── */}
         <div className="lg:col-span-4 flex items-center justify-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="relative w-full max-w-[440px] aspect-[4/3] rounded-3xl overflow-hidden border border-white/[0.12] shadow-[0_20px_60px_rgba(0,0,0,0.8)] backdrop-blur-md group"
+            className="relative w-full max-w-[460px] aspect-[4/3.4] rounded-3xl overflow-hidden border border-white/[0.14] bg-[#070512]/90 shadow-[0_25px_60px_rgba(0,0,0,0.8)] backdrop-blur-xl flex flex-col justify-between p-6"
           >
-            <img
-              src="/art-ai.jpg"
-              alt="Artificial Intelligence"
-              className="w-full h-full object-cover object-center filter contrast-[1.08] brightness-[0.95] group-hover:scale-105 transition-transform duration-700 ease-out"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#03050a]/80 via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#03050a]/40 via-transparent to-[#03050a]/40" />
-
-            {/* Top Right HUD card */}
-            <div className="absolute top-4 right-4 px-3.5 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/[0.12] shadow-lg flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full animate-pulse bg-[#c084fc]" />
-              <span className="text-[11px] font-semibold tracking-wide uppercase text-white/90">
-                Cognitive Engine
-              </span>
+            {/* Atmospheric Neural Glow — Pure CSS & SVG, zero static images */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full bg-gradient-to-tr from-[#9333ea]/35 via-[#c084fc]/25 to-transparent blur-[70px] animate-pulse" />
+              <div className="absolute inset-0 bg-[radial-gradient(#c084fc_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.05]" />
             </div>
 
-            {/* Bottom Left Telemetry */}
-            <div className="absolute bottom-4 left-4 px-3.5 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/[0.12] text-[10px] font-mono tracking-wider text-white/60">
-              NEURAL WEIGHTS CONVERGED · 99.8%
+            {/* Top HUD bar with mode switch */}
+            <div className="relative z-10 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#c084fc] animate-pulse shadow-[0_0_8px_#c084fc]" />
+                <span className="text-[11px] font-bold tracking-wider uppercase text-white/90">
+                  Cognitive Core
+                </span>
+              </div>
+              <div className="flex items-center gap-1 bg-white/[0.04] p-1 rounded-full border border-white/[0.08]">
+                <button
+                  onClick={() => setNeuralMode('network')}
+                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold transition-all cursor-pointer ${
+                    neuralMode === 'network'
+                      ? 'bg-[#c084fc]/25 text-[#e9d5ff] border border-[#c084fc]/50'
+                      : 'text-white/40 hover:text-white'
+                  }`}
+                >
+                  Neural Graph
+                </button>
+                <button
+                  onClick={() => setNeuralMode('metrics')}
+                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold transition-all cursor-pointer ${
+                    neuralMode === 'metrics'
+                      ? 'bg-[#c084fc]/25 text-[#e9d5ff] border border-[#c084fc]/50'
+                      : 'text-white/40 hover:text-white'
+                  }`}
+                >
+                  Telemetry
+                </button>
+              </div>
+            </div>
+
+            {/* Center Dynamic Visual: Interactive Generative Neural Network */}
+            <div className="relative z-10 my-auto py-2 flex items-center justify-center">
+              {neuralMode === 'network' ? (
+                <div className="relative w-full h-44 flex items-center justify-center">
+                  {/* Procedural Animated SVG Synapses */}
+                  <svg className="w-full h-full" viewBox="0 0 360 170" fill="none">
+                    {/* Synaptic vectors layer */}
+                    <g stroke="rgba(192, 132, 252, 0.22)" strokeWidth="1.2">
+                      {/* Inputs to Hidden */}
+                      <line x1="40" y1="35" x2="180" y2="40" />
+                      <line x1="40" y1="35" x2="180" y2="85" />
+                      <line x1="40" y1="85" x2="180" y2="40" />
+                      <line x1="40" y1="85" x2="180" y2="85" />
+                      <line x1="40" y1="85" x2="180" y2="130" />
+                      <line x1="40" y1="135" x2="180" y2="85" />
+                      <line x1="40" y1="135" x2="180" y2="130" />
+
+                      {/* Hidden to Output */}
+                      <line x1="180" y1="40" x2="320" y2="50" />
+                      <line x1="180" y1="40" x2="320" y2="120" />
+                      <line x1="180" y1="85" x2="320" y2="50" />
+                      <line x1="180" y1="85" x2="320" y2="85" />
+                      <line x1="180" y1="85" x2="320" y2="120" />
+                      <line x1="180" y1="130" x2="320" y2="85" />
+                      <line x1="180" y1="130" x2="320" y2="120" />
+                    </g>
+
+                    {/* Animated Data Packets Flowing Along Axons */}
+                    <circle cx="110" cy="60" r="2.5" fill="#c084fc">
+                      <animate attributeName="cx" values="40; 180" dur="2.2s" repeatCount="indefinite" />
+                      <animate attributeName="cy" values="35; 85" dur="2.2s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="250" cy="85" r="2.5" fill="#38bdf8">
+                      <animate attributeName="cx" values="180; 320" dur="1.8s" repeatCount="indefinite" />
+                      <animate attributeName="cy" values="85; 50" dur="1.8s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="110" cy="110" r="2.5" fill="#a855f7">
+                      <animate attributeName="cx" values="40; 180" dur="2.6s" repeatCount="indefinite" />
+                      <animate attributeName="cy" values="135; 85" dur="2.6s" repeatCount="indefinite" />
+                    </circle>
+
+                    {/* Nodes Layer: Input Column */}
+                    <g fill="#070512" stroke="#c084fc" strokeWidth="2">
+                      <circle cx="40" cy="35" r="7" />
+                      <circle cx="40" cy="85" r="7" />
+                      <circle cx="40" cy="135" r="7" />
+                    </g>
+                    <g fill="#c084fc">
+                      <circle cx="40" cy="35" r="3" />
+                      <circle cx="40" cy="85" r="3" />
+                      <circle cx="40" cy="135" r="3" />
+                    </g>
+
+                    {/* Nodes Layer: Hidden Dense Transformer Core */}
+                    <g fill="#180e29" stroke="#9333ea" strokeWidth="2">
+                      <circle cx="180" cy="40" r="9" />
+                      <circle cx="180" cy="85" r="11" />
+                      <circle cx="180" cy="130" r="9" />
+                    </g>
+                    <g fill="#e9d5ff">
+                      <circle cx="180" cy="40" r="4" />
+                      <circle cx="180" cy="85" r="5" className="animate-ping" style={{ transformOrigin: '180px 85px' }} />
+                      <circle cx="180" cy="130" r="4" />
+                    </g>
+
+                    {/* Nodes Layer: Output Projection Column */}
+                    <g fill="#070512" stroke="#38bdf8" strokeWidth="2">
+                      <circle cx="320" cy="50" r="7" />
+                      <circle cx="320" cy="85" r="8" />
+                      <circle cx="320" cy="120" r="7" />
+                    </g>
+                    <g fill="#38bdf8">
+                      <circle cx="320" cy="50" r="3" />
+                      <circle cx="320" cy="85" r="4" />
+                      <circle cx="320" cy="120" r="3" />
+                    </g>
+                  </svg>
+                </div>
+              ) : (
+                /* Live Model Parameters Telemetry */
+                <div className="w-full space-y-3 py-1">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-white/40">Model Architecture</span>
+                    <span className="font-mono text-white/90">Transformer-MoE · 8x7B</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-white/40">Attention Heads</span>
+                    <span className="font-mono text-[#c084fc]">32 Multi-Query Heads</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-white/40">Inference Cadence</span>
+                    <span className="font-mono text-white/90">142 Tokens/sec (FP16)</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-white/40">Context Alignment</span>
+                    <span className="font-mono text-[#38bdf8]">128,000 Tokens</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Bottom Telemetry Bar */}
+            <div className="relative z-10 pt-3 border-t border-white/[0.08] flex items-center justify-between text-[10px] font-mono text-white/50">
+              <span className="flex items-center gap-1.5">
+                <Activity size={12} className="text-[#c084fc]" />
+                AUTONOMOUS LATENTS ACTIVE
+              </span>
+              <span className="text-white/35">LOSS: 0.0124</span>
             </div>
           </motion.div>
         </div>

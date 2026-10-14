@@ -38,16 +38,35 @@ export default function DivisionStage({ division, onClose, onSelectDivision }) {
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className="fixed inset-0 z-[150] overflow-y-auto bg-[#03050a] text-white flex flex-col justify-between"
     >
-      {/* ── Background Glow Atmospheres (Subtle and seamless) ── */}
+      {/* ── Background Dynamic Atmosphere (Full-bleed theme, ZERO static images) ── */}
       <div className="fixed inset-0 pointer-events-none z-0">
+        {/* Volumetric glow orbs */}
         <div
-          className="absolute -top-[15%] left-[25%] w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full blur-[120px] opacity-20 transition-all duration-500"
-          style={{ background: division.accentColor }}
+          className="absolute -top-[15%] left-[20%] w-[65vw] h-[65vw] max-w-[800px] max-h-[800px] rounded-full blur-[130px] transition-all duration-700"
+          style={{
+            background: division.accentColor,
+            opacity: division.id === 'software' ? 0.20 : division.id === 'cyber' ? 0.18 : 0.22,
+          }}
         />
         <div
-          className="absolute -bottom-[15%] right-[15%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full blur-[130px] opacity-15 transition-all duration-500"
-          style={{ background: division.accentColor }}
+          className="absolute -bottom-[20%] right-[10%] w-[55vw] h-[55vw] max-w-[700px] max-h-[700px] rounded-full blur-[140px] transition-all duration-700"
+          style={{
+            background: division.accentColor,
+            opacity: division.id === 'software' ? 0.15 : division.id === 'cyber' ? 0.14 : 0.16,
+          }}
         />
+
+        {/* Division-specific procedural texture overlay */}
+        {division.id === 'software' && (
+          <div className="absolute inset-0 opacity-[0.035] bg-[linear-gradient(to_right,#38bdf8_1px,transparent_1px),linear-gradient(to_bottom,#38bdf8_1px,transparent_1px)] bg-[size:40px_40px]" />
+        )}
+        {division.id === 'cyber' && (
+          <div className="absolute inset-0 opacity-[0.035] bg-[radial-gradient(#00f0ff_1px,transparent_1px)] bg-[size:28px_28px]" />
+        )}
+        {division.id === 'ai' && (
+          <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(#c084fc_1px,transparent_1px)] bg-[size:32px_32px]" />
+        )}
+
         <div className="absolute inset-0 bg-gradient-to-t from-[#03050a] via-transparent to-[#03050a]/90" />
       </div>
 

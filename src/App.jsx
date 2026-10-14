@@ -60,60 +60,56 @@ function MainServiceCard({ division, index, onClick }) {
   const inView = useInView(ref, { once: true, margin: '-60px' });
   const [hovered, setHovered] = useState(false);
 
-  const previewImgs = {
-    software: '/theme-software.jpg',
-    cyber: '/theme-cyber.jpg',
-    ai: '/theme-ai.jpg',
-  };
-
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className="h-full"
     >
       <button
         onClick={onClick}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="group relative w-full h-full text-left overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 focus:outline-none flex flex-col justify-between p-8 min-h-[380px]"
+        className="group relative w-full h-full text-left overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 focus:outline-none flex flex-col justify-between p-8 min-h-[390px] bg-[#050711]/90 border backdrop-blur-xl cursor-pointer"
         style={{
-          border: `1px solid ${hovered ? division.accentColor + '70' : 'rgba(255,255,255,0.08)'}`,
-          boxShadow: hovered ? `0 20px 50px ${division.accentColor}30` : '0 10px 30px rgba(0,0,0,0.5)',
+          borderColor: hovered ? `${division.accentColor}70` : 'rgba(255,255,255,0.08)',
+          boxShadow: hovered ? `0 25px 60px ${division.accentColor}25` : '0 10px 30px rgba(0,0,0,0.5)',
         }}
       >
-        {/* Thematic background photo preview */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src={previewImgs[division.id]}
-            alt={division.label}
-            className="w-full h-full object-cover object-center filter brightness-[0.4] group-hover:brightness-[0.6] group-hover:scale-105 transition-all duration-700"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#03050a] via-[#03050a]/70 to-[#03050a]/40" />
-        </div>
-
-        {/* Ambient lighting glow on hover */}
+        {/* Ambient atmospheric aura — Pure CSS, NO static pictures */}
         <div
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-[80px] pointer-events-none transition-opacity duration-700"
           style={{
-            background: `radial-gradient(circle at 50% 30%, ${division.glowColor} 0%, transparent 70%)`,
+            background: division.accentColor,
+            opacity: hovered ? 0.28 : 0.08,
+          }}
+        />
+        <div
+          className="absolute -bottom-24 -left-24 w-64 h-64 rounded-full blur-[80px] pointer-events-none transition-opacity duration-700"
+          style={{
+            background: division.accentColor,
+            opacity: hovered ? 0.20 : 0.04,
           }}
         />
 
+        {/* Precision architectural hairline grid pattern */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.035] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] bg-[size:32px_32px]" />
+
         {/* Top bar: Number & Jewel Icon */}
         <div className="relative z-10 flex items-start justify-between w-full">
-          <span className="text-xs font-bold tracking-widest text-white/40 uppercase">
-            {division.index}
+          <span className="text-xs font-mono font-bold tracking-widest text-white/35 uppercase">
+            // {division.index}
           </span>
           <div
             className="w-13 h-13 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-lg"
             style={{
-              background: hovered ? `${division.accentColor}30` : 'rgba(0,0,0,0.6)',
+              background: hovered ? `${division.accentColor}25` : 'rgba(255,255,255,0.03)',
               color: hovered ? division.accentColor : 'rgba(255,255,255,0.7)',
-              border: `1px solid ${hovered ? `${division.accentColor}70` : 'rgba(255,255,255,0.12)'}`,
-              transform: hovered ? 'scale(1.1)' : 'scale(1)',
+              border: `1px solid ${hovered ? `${division.accentColor}60` : 'rgba(255,255,255,0.08)'}`,
+              transform: hovered ? 'scale(1.08)' : 'scale(1)',
+              boxShadow: hovered ? `0 0 25px ${division.accentColor}40` : 'none',
             }}
           >
             <LIcon name={division.icon} size={24} />
@@ -121,11 +117,17 @@ function MainServiceCard({ division, index, onClick }) {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 my-auto py-6">
+        <div className="relative z-10 my-auto py-8">
+          <span
+            className="text-[11px] font-bold tracking-[0.2em] uppercase block mb-2"
+            style={{ color: division.accentColor }}
+          >
+            {division.id === 'software' ? 'Engineering Studio' : division.id === 'cyber' ? 'Defense & Governance' : 'Intelligence Lab'}
+          </span>
           <h3 className="font-boska text-2xl lg:text-3xl font-normal text-white tracking-tight leading-tight mb-3">
             {division.label}
           </h3>
-          <p className="text-sm text-white/60 font-normal leading-relaxed">
+          <p className="text-sm text-white/55 font-normal leading-relaxed">
             {division.tagline}
           </p>
         </div>
@@ -136,7 +138,7 @@ function MainServiceCard({ division, index, onClick }) {
             {division.services.length} Services
           </span>
           <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white/70 group-hover:text-white transition-colors">
-            Enter Experience
+            Enter World
             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
           </span>
         </div>
