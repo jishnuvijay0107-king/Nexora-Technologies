@@ -6,8 +6,7 @@ import {
   Search, Smartphone, ShieldAlert, Wrench, Server, Lock,
   MailWarning, Network, GraduationCap, Cpu, FileCheck2,
   Sparkles, BarChart3, MessageSquareCode, Workflow,
-  LineChart, FileText, Layers, Plus, Minus, ArrowLeft,
-  CheckCircle2, Terminal, Activity, Eye, Zap,
+  LineChart, FileText, Layers, Play, ArrowLeft,
 } from 'lucide-react';
 import { divisions } from './data/servicesData';
 
@@ -53,296 +52,12 @@ function Marquee({ items, speed = 40 }) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   CINEMATIC VISUAL CENTERPIECES FOR EACH DIVISION WORLD
-   ══════════════════════════════════════════════════════════ */
-
-/* 1. Software Engineering Centerpiece: Architecture Canvas & IDE Layers */
-function SoftwareVisualCenterpiece() {
-  return (
-    <div className="relative w-full max-w-lg mx-auto aspect-[4/3] rounded-2xl overflow-hidden border border-blue-500/20 bg-[#060a16]/90 shadow-[0_0_50px_rgba(62,109,247,0.18)] backdrop-blur-xl p-5 flex flex-col justify-between">
-      {/* Moving blueprint grid background */}
-      <div className="absolute inset-0 pointer-events-none opacity-20"
-        style={{
-          backgroundImage: 'linear-gradient(rgba(62,109,247,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(62,109,247,0.3) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
-      
-      {/* Top window bar */}
-      <div className="relative z-10 flex items-center justify-between pb-3 border-b border-white/[0.08]">
-        <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
-          <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-          <span className="ml-2 text-xs text-white/40 font-medium">nexora-architecture.engine</span>
-        </div>
-        <span className="text-[11px] text-blue-400 font-semibold px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">PRODUCTION READY</span>
-      </div>
-
-      {/* Centerpiece architectural mockups & code blocks */}
-      <div className="relative z-10 my-auto space-y-3">
-        <div className="grid grid-cols-3 gap-2.5">
-          <div className="p-3 rounded-lg bg-white/[0.03] border border-blue-500/20">
-            <span className="block text-[10px] text-white/40 uppercase">Latency</span>
-            <span className="text-base font-bold text-white tracking-tight">1.2ms</span>
-          </div>
-          <div className="p-3 rounded-lg bg-white/[0.03] border border-blue-500/20">
-            <span className="block text-[10px] text-white/40 uppercase">Architecture</span>
-            <span className="text-base font-bold text-blue-400 tracking-tight">Distributed</span>
-          </div>
-          <div className="p-3 rounded-lg bg-white/[0.03] border border-blue-500/20">
-            <span className="block text-[10px] text-white/40 uppercase">Reliability</span>
-            <span className="text-base font-bold text-emerald-400 tracking-tight">100% SLA</span>
-          </div>
-        </div>
-
-        {/* Floating code simulation */}
-        <div className="p-3.5 rounded-xl bg-black/50 border border-white/[0.06] font-mono text-xs text-blue-200/80 space-y-1">
-          <div className="flex items-center justify-between text-white/30 text-[10px] pb-1 border-b border-white/[0.04]">
-            <span>pipeline_optimizer.ts</span>
-            <span className="text-emerald-400">Compiled OK</span>
-          </div>
-          <p className="text-white/60"><span className="text-blue-400">export</span> <span className="text-violet-400">class</span> DigitalArchitecture &#123;</p>
-          <p className="pl-4 text-white/80">buildSystem(specs: <span className="text-amber-300">EnterpriseReq</span>) &#123;</p>
-          <p className="pl-8 text-emerald-300">// Precision engineering without compromise</p>
-          <p className="pl-4 text-white/80">&#125;</p>
-          <p className="text-white/60">&#125;</p>
-        </div>
-      </div>
-
-      {/* Bottom status */}
-      <div className="relative z-10 flex items-center justify-between pt-2 border-t border-white/[0.06] text-[11px] text-white/40">
-        <span className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-          Continuous Integration Pipeline Active
-        </span>
-        <span className="text-white/60 font-medium">Bespoke Framework</span>
-      </div>
-    </div>
-  );
-}
-
-/* 2. Cybersecurity Centerpiece: Dimensional Shield & Defense Matrix */
-function CyberVisualCenterpiece() {
-  return (
-    <div className="relative w-full max-w-lg mx-auto aspect-[4/3] rounded-2xl overflow-hidden border border-cyan-500/30 bg-[#02050b]/90 shadow-[0_0_60px_rgba(0,212,204,0.18)] backdrop-blur-xl p-6 flex flex-col justify-between">
-      {/* Hexagonal grid texture */}
-      <div className="absolute inset-0 pointer-events-none opacity-20"
-        style={{
-          backgroundImage: 'radial-gradient(circle at center, rgba(0,212,204,0.2) 1px, transparent 1px)',
-          backgroundSize: '20px 20px',
-        }}
-      />
-
-      {/* Top security status */}
-      <div className="relative z-10 flex items-center justify-between pb-3 border-b border-cyan-500/20">
-        <div className="flex items-center gap-2">
-          <Shield size={16} className="text-cyan-400" />
-          <span className="text-xs font-semibold text-white/80 tracking-wide uppercase">Zero-Trust Perimeter</span>
-        </div>
-        <span className="text-[11px] font-semibold text-cyan-300 px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 animate-pulse">
-          DEFENSE ARMED
-        </span>
-      </div>
-
-      {/* Center dimensional shield visual */}
-      <div className="relative z-10 my-auto flex flex-col items-center justify-center py-2">
-        <div className="relative w-28 h-28 flex items-center justify-center">
-          {/* Animated concentric rings */}
-          <div className="absolute inset-0 rounded-full border border-cyan-400/20 animate-ping opacity-40" />
-          <div className="absolute inset-2 rounded-full border border-dashed border-cyan-400/40 animate-spin" style={{ animationDuration: '20s' }} />
-          <div className="absolute inset-5 rounded-full bg-cyan-500/10 backdrop-blur-md border border-cyan-400/50 shadow-[0_0_30px_rgba(0,212,204,0.4)]" />
-          <Lock size={32} className="relative z-10 text-cyan-300 drop-shadow-[0_0_12px_rgba(0,212,204,0.8)]" />
-        </div>
-
-        {/* Security telemetry metrics */}
-        <div className="grid grid-cols-2 gap-3 w-full mt-4">
-          <div className="p-2.5 rounded-xl bg-cyan-950/20 border border-cyan-500/20 text-center">
-            <span className="block text-[10px] text-cyan-200/50 uppercase">Protective Posture</span>
-            <span className="text-sm font-bold text-white">Full Hardening</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-cyan-950/20 border border-cyan-500/20 text-center">
-            <span className="block text-[10px] text-cyan-200/50 uppercase">Vulnerability Exposure</span>
-            <span className="text-sm font-bold text-cyan-300">0 Critical Risks</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom status */}
-      <div className="relative z-10 flex items-center justify-between pt-2 border-t border-cyan-500/15 text-[11px] text-cyan-200/60">
-        <span className="flex items-center gap-1.5">
-          <CheckCircle2 size={13} className="text-cyan-400" />
-          Authorized Security Auditing Protocol
-        </span>
-        <span className="text-cyan-400 font-medium">Verified Scope</span>
-      </div>
-    </div>
-  );
-}
-
-/* 3. Artificial Intelligence Centerpiece: Neural Constellation & Cognitive Stream */
-function AIVisualCenterpiece() {
-  return (
-    <div className="relative w-full max-w-lg mx-auto aspect-[4/3] rounded-2xl overflow-hidden border border-purple-500/25 bg-[#050410]/90 shadow-[0_0_60px_rgba(155,93,229,0.2)] backdrop-blur-xl p-6 flex flex-col justify-between">
-      {/* Radial particle background */}
-      <div className="absolute inset-0 pointer-events-none opacity-25"
-        style={{
-          background: 'radial-gradient(circle at 60% 40%, rgba(155,93,229,0.3) 0%, transparent 60%)',
-        }}
-      />
-
-      {/* Top AI status */}
-      <div className="relative z-10 flex items-center justify-between pb-3 border-b border-purple-500/20">
-        <div className="flex items-center gap-2">
-          <Brain size={16} className="text-purple-400" />
-          <span className="text-xs font-semibold text-white/80 tracking-wide uppercase">Cognitive Inference Engine</span>
-        </div>
-        <span className="text-[11px] font-semibold text-purple-300 px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30">
-          NEURAL ACTIVE
-        </span>
-      </div>
-
-      {/* Center neural constellation graphic */}
-      <div className="relative z-10 my-auto flex flex-col items-center justify-center py-2">
-        <div className="relative w-full h-32 flex items-center justify-center">
-          <svg className="w-full h-full" viewBox="0 0 300 120" fill="none">
-            {/* Synaptic paths */}
-            <path d="M30 60 Q 90 20, 150 60 T 270 60" stroke="#9b5de5" strokeWidth="1.5" strokeOpacity="0.4" strokeDasharray="3 3" />
-            <path d="M50 30 Q 150 90, 250 30" stroke="#60a5fa" strokeWidth="1.5" strokeOpacity="0.4" />
-            <path d="M60 90 Q 150 30, 240 90" stroke="#c084fc" strokeWidth="1.5" strokeOpacity="0.5" />
-            
-            {/* Pulsing Nodes */}
-            <circle cx="30" cy="60" r="5" fill="#3b82f6" />
-            <circle cx="90" cy="35" r="6" fill="#9b5de5" className="animate-pulse" />
-            <circle cx="150" cy="60" r="9" fill="#c084fc" className="shadow-[0_0_15px_#c084fc]" />
-            <circle cx="210" cy="85" r="6" fill="#818cf8" className="animate-pulse" />
-            <circle cx="270" cy="60" r="5" fill="#38bdf8" />
-          </svg>
-        </div>
-
-        {/* Intelligence telemetry */}
-        <div className="grid grid-cols-2 gap-3 w-full">
-          <div className="p-2.5 rounded-xl bg-purple-950/20 border border-purple-500/20 text-center">
-            <span className="block text-[10px] text-purple-200/50 uppercase">Workflow Automation</span>
-            <span className="text-sm font-bold text-white">Intelligent Speed</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-purple-950/20 border border-purple-500/20 text-center">
-            <span className="block text-[10px] text-purple-200/50 uppercase">Decision Precision</span>
-            <span className="text-sm font-bold text-purple-300">Human-Verified</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom status */}
-      <div className="relative z-10 flex items-center justify-between pt-2 border-t border-purple-500/15 text-[11px] text-purple-200/60">
-        <span className="flex items-center gap-1.5">
-          <Sparkles size={13} className="text-purple-400" />
-          Multi-Modal Synthesis Engine
-        </span>
-        <span className="text-purple-400 font-medium">Enterprise Safe</span>
-      </div>
-    </div>
-  );
-}
-
-/* ─── Service Row with refined interactive expander ─── */
-function ServiceRow({ svc, index, isOpen, onToggle, accent, onEnquire }) {
-  return (
-    <div className="border-b border-white/[0.08] last:border-0 transition-all duration-300">
-      <button
-        onClick={onToggle}
-        className="group w-full flex items-center gap-4 md:gap-6 py-5 md:py-6 text-left transition-colors duration-300"
-      >
-        {/* Index number */}
-        <span className="text-xs font-medium text-white/35 shrink-0 w-8 tabular-nums">
-          {String(index + 1).padStart(2, '0')}
-        </span>
-
-        {/* Jewel-box icon */}
-        <span
-          className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300"
-          style={{
-            background: isOpen
-              ? `radial-gradient(circle, ${accent}30 0%, rgba(255,255,255,0.02) 100%)`
-              : 'rgba(255,255,255,0.03)',
-            color: isOpen ? accent : 'rgba(255,255,255,0.5)',
-            border: `1px solid ${isOpen ? `${accent}50` : 'rgba(255,255,255,0.07)'}`,
-            boxShadow: isOpen ? `0 0 20px ${accent}25` : 'none',
-          }}
-        >
-          <LIcon name={svc.icon} size={18} />
-        </span>
-
-        {/* Title */}
-        <span className={`flex-1 text-base md:text-lg font-semibold tracking-[-0.01em] transition-colors duration-300 ${isOpen ? 'text-white' : 'text-white/70 group-hover:text-white'}`}>
-          {svc.title}
-        </span>
-
-        {/* Divider rule */}
-        <span className="hidden md:block flex-1 max-w-[120px]">
-          <span className="block h-[1px] bg-white/10 group-hover:bg-white/20 transition-colors duration-500" />
-        </span>
-
-        {/* Expand plus/minus indicator */}
-        <motion.span
-          animate={{ rotate: isOpen ? 45 : 0 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="w-8 h-8 rounded-full border flex items-center justify-center shrink-0 transition-colors duration-300"
-          style={{
-            borderColor: isOpen ? `${accent}60` : 'rgba(255,255,255,0.12)',
-            color: isOpen ? accent : 'rgba(255,255,255,0.4)',
-            background: isOpen ? `${accent}15` : 'transparent',
-          }}
-        >
-          <Plus size={15} strokeWidth={2} />
-        </motion.span>
-      </button>
-
-      {/* Expanded description with direct inquiry action */}
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="flex gap-4 md:gap-6 pb-8 pl-12 md:pl-14">
-              <div className="flex-1 flex flex-col md:flex-row md:items-end justify-between gap-6 border-l-2 pl-5 md:pl-6" style={{ borderColor: `${accent}40` }}>
-                <p className="text-sm md:text-base text-white/65 font-normal leading-[1.8] max-w-2xl">
-                  {svc.desc}
-                </p>
-                <button
-                  type="button"
-                  onClick={onEnquire}
-                  className="shrink-0 inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase transition-all duration-300 px-5 py-2.5 rounded-full border hover:scale-105"
-                  style={{
-                    color: accent,
-                    borderColor: `${accent}50`,
-                    background: `${accent}15`,
-                    boxShadow: `0 0 15px ${accent}25`,
-                  }}
-                >
-                  Enquire <ArrowUpRight size={13} />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════
-   FULL-SCREEN CINEMATIC DIVISION WORLD EXPERIENCE
+   CINEMATIC DIVISION EXPERIENCE (The Exact Theme)
    ══════════════════════════════════════════════════════════ */
 function DivisionStage({ division, onClose, onSelectDivision }) {
-  const [openSvc, setOpenSvc] = useState(division.services[0]?.id || null);
-  const toggle = (id) => setOpenSvc(prev => prev === id ? null : id);
+  const [activeSvcId, setActiveSvcId] = useState(division.services[0]?.id || null);
 
-  // Close on Escape key
+  // Keyboard Escape listener
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
@@ -358,6 +73,66 @@ function DivisionStage({ division, onClose, onSelectDivision }) {
     }, 150);
   };
 
+  const activeSvc = division.services.find(s => s.id === activeSvcId) || division.services[0];
+
+  // Specific theme configuration per division matching the user's reference mockup
+  const themeConfig = {
+    software: {
+      tag: 'SOFTWARE ENGINEERING',
+      headlinePart1: 'Engineering',
+      headlinePart2: 'Digital ',
+      headlineHighlight: 'Experiences.',
+      accentText: 'text-[#38bdf8]',
+      accentBg: 'bg-[#0284c7]',
+      accentBorder: 'border-[#38bdf8]',
+      accentGlow: 'shadow-[0_0_30px_rgba(56,189,248,0.4)]',
+      primaryBtnGradient: 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
+      secondaryActionText: 'See Our Work',
+      centerpieceImg: '/art-software.jpg',
+      footerWatermark: 'Code · Design · Build · Grow',
+      floatingCard: {
+        title: 'Database Schema',
+        code: 'table users { id: uuid, role: admin }',
+      },
+    },
+    cyber: {
+      tag: 'CYBERSECURITY',
+      headlinePart1: 'Stronger Security',
+      headlinePart2: 'for a ',
+      headlineHighlight: 'Safer Tomorrow.',
+      accentText: 'text-[#00f0ff]',
+      accentBg: 'bg-[#00d4cc]',
+      accentBorder: 'border-[#00f0ff]',
+      accentGlow: 'shadow-[0_0_30px_rgba(0,240,255,0.4)]',
+      primaryBtnGradient: 'linear-gradient(135deg, #00d4cc 0%, #0284c7 100%)',
+      secondaryActionText: 'Watch Overview',
+      centerpieceImg: '/art-cyber.jpg',
+      footerWatermark: 'Protect · Monitor · Secure · Defend',
+      floatingCard: {
+        title: 'Zero-Trust Vector',
+        code: 'PERIMETER HARDENED · 100% SECURE',
+      },
+    },
+    ai: {
+      tag: 'ARTIFICIAL INTELLIGENCE',
+      headlinePart1: 'Intelligent Solutions',
+      headlinePart2: 'for a ',
+      headlineHighlight: 'Smarter Tomorrow.',
+      accentText: 'text-[#c084fc]',
+      accentBg: 'bg-[#9333ea]',
+      accentBorder: 'border-[#c084fc]',
+      accentGlow: 'shadow-[0_0_30px_rgba(192,132,252,0.4)]',
+      primaryBtnGradient: 'linear-gradient(135deg, #9333ea 0%, #4f46e5 100%)',
+      secondaryActionText: 'Watch How It Works',
+      centerpieceImg: '/art-ai.jpg',
+      footerWatermark: 'Learn · Automate · Optimize · Scale',
+      floatingCard: {
+        title: 'Cognitive Engine',
+        code: 'NEURAL WEIGHTS CONVERGED · 99.8%',
+      },
+    },
+  }[division.id];
+
   return (
     <motion.div
       key={division.id}
@@ -365,242 +140,314 @@ function DivisionStage({ division, onClose, onSelectDivision }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.985 }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-0 z-[150] overflow-hidden"
-      style={{ background: '#030408' }}
+      className="fixed inset-0 z-[150] overflow-y-auto bg-[#03050a] text-white flex flex-col justify-between"
     >
-      {/* ── Layer 1: Division atmospheric glow ── */}
-      <motion.div
-        className="absolute pointer-events-none"
-        initial={{ opacity: 0, scale: 0.6 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        style={{
-          top: '-20%', right: '-15%',
-          width: '70vw', height: '70vw',
-          maxWidth: 900, maxHeight: 900,
-          borderRadius: '50%',
-          background: `radial-gradient(circle, ${division.glowColor} 0%, transparent 65%)`,
-          filter: 'blur(70px)',
-        }}
-      />
-
-      {/* ── Layer 2: Custom dynamic background ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ background: division.bgGradient }}>
-        {division.id === 'cyber' && (
-          <motion.div
-            className="absolute left-0 right-0 h-[1.5px] pointer-events-none z-[5]"
-            style={{
-              background: `linear-gradient(90deg, transparent 0%, ${division.accentColor}60 30%, ${division.accentColor} 50%, ${division.accentColor}60 70%, transparent 100%)`,
-              boxShadow: `0 0 12px ${division.accentColor}80`,
-            }}
-            initial={{ top: '0%', opacity: 0 }}
-            animate={{ top: ['0%', '100%'], opacity: [0, 0.85, 0.85, 0] }}
-            transition={{ duration: 4.8, repeat: Infinity, ease: 'linear', repeatDelay: 2.5 }}
-          />
-        )}
+      {/* ── Background Glow Atmospheres ── */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div
+          className="absolute -top-[20%] left-[20%] w-[65vw] h-[65vw] max-w-[800px] max-h-[800px] rounded-full blur-[100px] opacity-25"
+          style={{ background: division.accentColor }}
+        />
+        <div
+          className="absolute -bottom-[20%] right-[10%] w-[55vw] h-[55vw] max-w-[700px] max-h-[700px] rounded-full blur-[110px] opacity-20"
+          style={{ background: division.accentColor }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#03050a] via-transparent to-[#03050a]/90" />
       </div>
 
-      {/* ── Layer 3: Vignette & Film Grain ── */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 50%, transparent 35%, rgba(3,4,8,0.85) 100%)' }} />
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#030408] via-transparent to-[#030408]" />
-      <div className="absolute inset-0 pointer-events-none film-grain opacity-25 mix-blend-overlay" />
-
-      {/* ════════════════════════════════════════
-          SCROLLABLE CONTENT STAGE
-          ════════════════════════════════════════ */}
-      <div className="relative z-10 h-full overflow-y-auto">
-
-        {/* ── Top Bar: Division Switcher + Clear Return Actions ── */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 md:px-12 pt-6 pb-5 backdrop-blur-md"
-          style={{ background: 'linear-gradient(to bottom, rgba(3,4,8,0.96) 0%, rgba(3,4,8,0.85) 75%, transparent 100%)' }}>
-          
-          {/* Back button */}
-          <motion.button
-            onClick={onClose}
-            initial={{ opacity: 0, x: -16 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="group flex items-center gap-2.5 text-white/60 hover:text-white transition-colors duration-300"
-          >
-            <span className="w-8 h-8 rounded-full border border-white/10 group-hover:border-white/30 flex items-center justify-center transition-all duration-300">
-              <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
-            </span>
-            <span className="text-xs font-semibold uppercase tracking-wider">All Divisions</span>
-          </motion.button>
-
-          {/* Division switcher pills */}
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="hidden md:flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08]"
-          >
-            {divisions.map((d) => {
-              const isActive = d.id === division.id;
-              return (
-                <button
-                  key={d.id}
-                  onClick={() => onSelectDivision?.(d)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-300 flex items-center gap-2 ${
-                    isActive
-                      ? 'text-white bg-white/[0.1] shadow-sm'
-                      : 'text-white/40 hover:text-white/80 hover:bg-white/[0.03]'
-                  }`}
-                  style={isActive ? { borderColor: `${d.accentColor}50` } : {}}
-                >
-                  <span
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ background: isActive ? d.accentColor : 'rgba(255,255,255,0.25)' }}
-                  />
-                  {d.label}
-                </button>
-              );
-            })}
-          </motion.div>
-
-          {/* Close button with ESC badge */}
-          <motion.button
-            onClick={onClose}
-            initial={{ opacity: 0, x: 16 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="group flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 hover:border-white/30 text-white/50 hover:text-white transition-all duration-300 bg-white/[0.03]"
-            title="Close (Press Escape)"
-          >
-            <span className="text-xs font-semibold tracking-wider uppercase hidden sm:inline text-white/40 group-hover:text-white/80">ESC</span>
-            <X size={15} className="group-hover:rotate-90 transition-transform duration-300" />
-          </motion.button>
+      {/* ── Top Header Bar ── */}
+      <header className="relative z-20 w-full max-w-[1500px] mx-auto px-6 md:px-12 pt-6 pb-4 flex items-center justify-between border-b border-white/[0.06] backdrop-blur-md">
+        {/* Logo */}
+        <div className="flex items-baseline gap-2">
+          <span className="text-xl font-bold tracking-[0.25em] uppercase text-white">Nexora</span>
+          <span className="text-[10px] tracking-[0.3em] uppercase text-white/40 hidden sm:inline">Technologies</span>
         </div>
 
-        {/* ── Main Hero Area: Editorial Headline + Visual Centerpiece ── */}
-        <div className="px-6 md:px-12 pt-8 md:pt-14 pb-12 md:pb-16 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          
-          {/* Left Column: Required Division Headline & Narrative */}
-          <div className="lg:col-span-6 space-y-6">
+        {/* Center Division Switcher */}
+        <div className="hidden lg:flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08]">
+          {divisions.map((d) => {
+            const isCurrent = d.id === division.id;
+            return (
+              <button
+                key={d.id}
+                onClick={() => onSelectDivision?.(d)}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 flex items-center gap-2 ${
+                  isCurrent
+                    ? 'text-white bg-white/[0.12] shadow-sm'
+                    : 'text-white/40 hover:text-white/80 hover:bg-white/[0.02]'
+                }`}
+                style={isCurrent ? { borderColor: `${d.accentColor}50` } : {}}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ background: isCurrent ? d.accentColor : 'rgba(255,255,255,0.25)' }}
+                />
+                {d.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Right CTA & Close Buttons */}
+        <div className="flex items-center gap-4">
+          <button
+            onClick={handleEnquire}
+            className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider px-5 py-2 rounded-full border border-white/20 hover:border-white/50 text-white transition-all duration-300 hover:bg-white/[0.05]"
+          >
+            Get Started <ArrowRight size={13} />
+          </button>
+          <button
+            onClick={onClose}
+            className="flex items-center gap-1.5 text-xs text-white/50 hover:text-white px-3 py-1.5 rounded-full border border-white/10 hover:border-white/30 transition-all duration-300"
+            title="Press Escape to exit"
+          >
+            <span className="text-[11px] font-semibold text-white/35">ESC</span>
+            <X size={15} />
+          </button>
+        </div>
+      </header>
+
+      {/* ── Sub-navigation: Return to Services ── */}
+      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 pt-6">
+        <button
+          onClick={onClose}
+          className="group inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-white/50 hover:text-white transition-colors duration-300"
+        >
+          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+          <span>Back to Services</span>
+        </button>
+      </div>
+
+      {/* ── Main 3-Column Experience ── */}
+      <main className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 py-8 lg:py-12 flex-1 flex flex-col justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+
+          {/* ════════════════════════════════════════
+              LEFT COLUMN: Title, Tagline & Action CTAs
+              ════════════════════════════════════════ */}
+          <div className="lg:col-span-4 space-y-6">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
+              initial={{ opacity: 0, x: -24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              {/* Category indicator */}
-              <div className="flex items-center gap-2.5 mb-4">
-                <span className="w-2.5 h-2.5 rounded-full" style={{ background: division.accentColor }} />
-                <span className="text-xs font-bold uppercase tracking-wider" style={{ color: division.accentColor }}>
-                  {division.label} Division
+              {/* Division tag with horizontal line */}
+              <div className="flex items-center gap-3 mb-5">
+                <span className="w-8 h-[2px] rounded-full" style={{ background: division.accentColor }} />
+                <span
+                  className="text-xs font-bold tracking-[0.2em] uppercase"
+                  style={{ color: division.accentColor }}
+                >
+                  {themeConfig.tag}
                 </span>
               </div>
 
-              {/* Exact Required Title */}
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.06]">
-                {division.headline}
-              </h2>
+              {/* Exact Styled Headline */}
+              <h1 className="text-3xl md:text-5xl xl:text-[3.25rem] font-extrabold tracking-tight text-white leading-[1.08]">
+                {themeConfig.headlinePart1}
+                <br />
+                {themeConfig.headlinePart2}
+                <span
+                  style={{ color: division.accentColor }}
+                  className="drop-shadow-[0_0_35px_rgba(56,189,248,0.45)]"
+                >
+                  {themeConfig.headlineHighlight}
+                </span>
+              </h1>
 
-              {/* Exact Required Supporting Text */}
-              <p className="mt-5 text-base md:text-lg text-white/65 font-normal leading-relaxed">
+              {/* Exact Supporting Text */}
+              <p className="mt-5 text-sm md:text-base text-white/60 font-normal leading-[1.8] max-w-md">
                 {division.supportingText}
               </p>
 
-              {/* Action buttons */}
+              {/* Action Buttons */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
+                {/* Primary Button */}
                 <button
                   type="button"
                   onClick={handleEnquire}
-                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider px-6 py-3 rounded-full text-white shadow-lg transition-all duration-300 hover:scale-105"
-                  style={{ background: division.accentColor }}
+                  className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-white px-6 py-3.5 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
+                  style={{
+                    background: themeConfig.primaryBtnGradient,
+                    boxShadow: `0 0 25px ${division.accentColor}40`,
+                  }}
                 >
-                  Discuss a Project <ArrowRight size={14} />
+                  <span>Explore Our Services</span>
+                  <ArrowRight size={14} />
                 </button>
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-xs font-medium text-white/50">
-                  <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: division.accentColor }} />
-                  {division.services.length} Specialized Offerings
-                </div>
+
+                {/* Secondary Action */}
+                <button
+                  type="button"
+                  onClick={handleEnquire}
+                  className="inline-flex items-center gap-2.5 text-xs font-semibold text-white/70 hover:text-white px-4 py-3 rounded-full transition-colors group"
+                >
+                  <span className="w-7 h-7 rounded-full border border-white/20 group-hover:border-white/50 flex items-center justify-center transition-colors">
+                    <Play size={11} className="fill-white translate-x-0.5" />
+                  </span>
+                  <span>{themeConfig.secondaryActionText}</span>
+                </button>
               </div>
             </motion.div>
           </div>
 
-          {/* Right Column: Distinctive Interactive Visual Centerpiece */}
-          <div className="lg:col-span-6">
+          {/* ════════════════════════════════════════
+              CENTER COLUMN: The Cinematic Artwork Centerpiece
+              ════════════════════════════════════════ */}
+          <div className="lg:col-span-4 flex items-center justify-center">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="relative w-full max-w-[440px] aspect-[4/3] rounded-3xl overflow-hidden border border-white/[0.12] shadow-[0_20px_60px_rgba(0,0,0,0.8)] backdrop-blur-md group"
             >
-              {division.id === 'software' && <SoftwareVisualCenterpiece />}
-              {division.id === 'cyber' && <CyberVisualCenterpiece />}
-              {division.id === 'ai' && <AIVisualCenterpiece />}
+              {/* Centerpiece Image from Reference Theme */}
+              <img
+                src={themeConfig.centerpieceImg}
+                alt={division.label}
+                className="w-full h-full object-cover object-center filter contrast-[1.08] brightness-[0.95] group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+
+              {/* Vignette fade around edges */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#03050a]/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#03050a]/40 via-transparent to-[#03050a]/40" />
+
+              {/* Floating Glassmorphic HUD Badge (Top-Right) */}
+              <div className="absolute top-4 right-4 px-3.5 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/[0.12] shadow-lg flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: division.accentColor }} />
+                <span className="text-[11px] font-semibold tracking-wide uppercase text-white/90">
+                  {themeConfig.floatingCard.title}
+                </span>
+              </div>
+
+              {/* Active Division Pulse Indicator (Bottom-Left) */}
+              <div className="absolute bottom-4 left-4 px-3.5 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/[0.12] text-[10px] font-mono tracking-wider text-white/60">
+                {themeConfig.floatingCard.code}
+              </div>
             </motion.div>
           </div>
-        </div>
 
-        {/* ── Separator Line ── */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1.0, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-6 md:mx-12 h-[1px] origin-left"
-          style={{ background: `linear-gradient(90deg, ${division.accentColor}60, rgba(255,255,255,0.06) 50%, transparent)` }}
-        />
-
-        {/* ── Complete Services List with Staggered Entrance ── */}
-        <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto">
-          <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.08]">
-            <span className="text-xs font-bold uppercase tracking-wider text-white/50">
-              Complete Service Catalog ({division.services.length})
-            </span>
-            <span className="text-xs text-white/35">
-              Click any service to view scope and details
-            </span>
-          </div>
-
-          <div className="space-y-1">
-            {division.services.map((svc, i) => (
-              <motion.div
-                key={svc.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 + i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <ServiceRow
-                  svc={svc}
-                  index={i}
-                  isOpen={openSvc === svc.id}
-                  onToggle={() => toggle(svc.id)}
-                  accent={division.accentColor}
-                  onEnquire={handleEnquire}
-                />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Bottom CTA Banner ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="px-6 md:px-12 py-12 md:py-16 max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 border-t border-white/[0.06] mt-8"
-        >
-          <div>
-            <p className="text-xs font-semibold tracking-wider uppercase text-white/40 mb-1">Ready to start?</p>
-            <p className="text-base text-white/80 font-medium">Tell us what you want to achieve.</p>
-          </div>
-          <button
-            type="button"
-            onClick={handleEnquire}
-            className="group flex items-center gap-3 text-sm font-semibold text-white px-6 py-3 rounded-full border border-white/10 hover:border-white/30 transition-all duration-300 bg-white/[0.04]"
-          >
-            <span>Start a Conversation</span>
-            <span
-              className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-              style={{ background: division.accentColor, color: '#fff' }}
+          {/* ════════════════════════════════════════
+              RIGHT COLUMN: Vertical Glassmorphic Service Cards
+              ════════════════════════════════════════ */}
+          <div className="lg:col-span-4 flex flex-col justify-center">
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="space-y-2.5 max-h-[560px] overflow-y-auto pr-2 custom-scrollbar"
             >
-              <ArrowUpRight size={15} />
-            </span>
-          </button>
-        </motion.div>
+              {division.services.map((svc, i) => {
+                const isSelected = svc.id === activeSvcId;
+                return (
+                  <div
+                    key={svc.id}
+                    onClick={() => setActiveSvcId(svc.id)}
+                    className={`group cursor-pointer rounded-2xl p-4 transition-all duration-300 border ${
+                      isSelected
+                        ? 'bg-white/[0.07] shadow-xl backdrop-blur-xl'
+                        : 'bg-white/[0.025] hover:bg-white/[0.05] border-white/[0.06] hover:border-white/[0.15]'
+                    }`}
+                    style={
+                      isSelected
+                        ? {
+                            borderColor: `${division.accentColor}80`,
+                            boxShadow: `0 0 25px ${division.accentColor}20`,
+                          }
+                        : {}
+                    }
+                  >
+                    {/* Top Row: Icon, Number, Title & Arrow */}
+                    <div className="flex items-center gap-3.5 justify-between">
+                      <div className="flex items-center gap-3">
+                        {/* Jewel Icon Box */}
+                        <div
+                          className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300"
+                          style={{
+                            background: isSelected ? `${division.accentColor}25` : 'rgba(255,255,255,0.04)',
+                            color: isSelected ? division.accentColor : 'rgba(255,255,255,0.5)',
+                            border: `1px solid ${isSelected ? `${division.accentColor}50` : 'rgba(255,255,255,0.08)'}`,
+                          }}
+                        >
+                          <LIcon name={svc.icon} size={16} />
+                        </div>
 
-      </div>
+                        {/* Number */}
+                        <span className="text-xs font-semibold tracking-wider text-white/35 tabular-nums">
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+
+                        {/* Title */}
+                        <span className={`text-sm font-semibold tracking-tight transition-colors ${
+                          isSelected ? 'text-white' : 'text-white/70 group-hover:text-white'
+                        }`}>
+                          {svc.title}
+                        </span>
+                      </div>
+
+                      {/* Arrow */}
+                      <ArrowRight
+                        size={15}
+                        className={`transition-all duration-300 shrink-0 ${
+                          isSelected
+                            ? 'translate-x-1 opacity-100'
+                            : 'opacity-30 group-hover:opacity-75 group-hover:translate-x-0.5'
+                        }`}
+                        style={{ color: isSelected ? division.accentColor : '#ffffff' }}
+                      />
+                    </div>
+
+                    {/* Expanded details when selected */}
+                    <AnimatePresence>
+                      {isSelected && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.35 }}
+                          className="overflow-hidden mt-3 pt-3 border-t border-white/[0.08]"
+                        >
+                          <p className="text-xs text-white/60 font-normal leading-relaxed mb-3">
+                            {svc.desc}
+                          </p>
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-semibold uppercase tracking-wider text-white/35">
+                              Deliverable Scope Included
+                            </span>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleEnquire();
+                              }}
+                              className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider transition-colors hover:underline"
+                              style={{ color: division.accentColor }}
+                            >
+                              Enquire <ArrowUpRight size={12} />
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </motion.div>
+          </div>
+
+        </div>
+      </main>
+
+      {/* ── Bottom Watermark Footer ── */}
+      <footer className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 py-5 flex items-center justify-between border-t border-white/[0.06] text-xs text-white/30">
+        <span className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full" style={{ background: division.accentColor }} />
+          <span>Nexora Technologies // Mission-Critical Digital Engineering</span>
+        </span>
+        <span className="tracking-widest uppercase font-semibold text-white/40 hidden sm:inline">
+          {themeConfig.footerWatermark}
+        </span>
+      </footer>
     </motion.div>
   );
 }
@@ -612,6 +459,12 @@ function MainServiceCard({ division, index, onClick }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
   const [hovered, setHovered] = useState(false);
+
+  const previewImgs = {
+    software: '/theme-software.jpg',
+    cyber: '/theme-cyber.jpg',
+    ai: '/theme-ai.jpg',
+  };
 
   return (
     <motion.div
@@ -625,78 +478,66 @@ function MainServiceCard({ division, index, onClick }) {
         onClick={onClick}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="group relative w-full h-full text-left overflow-hidden rounded-2xl transition-all duration-500 hover:-translate-y-1.5 focus:outline-none flex flex-col justify-between"
+        className="group relative w-full h-full text-left overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 focus:outline-none flex flex-col justify-between p-8 min-h-[380px]"
         style={{
-          border: `1px solid ${hovered ? division.accentColor + '50' : 'rgba(255,255,255,0.08)'}`,
-          background: hovered ? `${division.accentColor}0a` : 'rgba(255,255,255,0.02)',
-          boxShadow: hovered ? `0 15px 40px ${division.accentColor}25` : 'none',
+          border: `1px solid ${hovered ? division.accentColor + '70' : 'rgba(255,255,255,0.08)'}`,
+          boxShadow: hovered ? `0 20px 50px ${division.accentColor}30` : '0 10px 30px rgba(0,0,0,0.5)',
         }}
       >
-        {/* Accent top laser edge */}
-        <motion.div
-          className="absolute top-0 left-6 right-6 h-[2px]"
-          animate={{ opacity: hovered ? 1 : 0, scaleX: hovered ? 1 : 0.4 }}
-          transition={{ duration: 0.45 }}
+        {/* Thematic background photo preview */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src={previewImgs[division.id]}
+            alt={division.label}
+            className="w-full h-full object-cover object-center filter brightness-[0.4] group-hover:brightness-[0.6] group-hover:scale-105 transition-all duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#03050a] via-[#03050a]/70 to-[#03050a]/40" />
+        </div>
+
+        {/* Ambient lighting glow on hover */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
           style={{
-            background: `linear-gradient(90deg, transparent, ${division.accentColor}, transparent)`,
-            boxShadow: `0 0 12px ${division.accentColor}`,
-            originX: 0.5,
+            background: `radial-gradient(circle at 50% 30%, ${division.glowColor} 0%, transparent 70%)`,
           }}
         />
 
-        {/* Ambient glow bloom */}
-        <motion.div
-          className="absolute pointer-events-none"
-          animate={{ opacity: hovered ? 1 : 0 }}
-          transition={{ duration: 0.6 }}
-          style={{
-            top: '-25%', right: '-25%',
-            width: '85%', height: '125%',
-            background: `radial-gradient(circle, ${division.glowColor} 0%, transparent 65%)`,
-            filter: 'blur(35px)',
-          }}
-        />
-
-        {/* Card Header & Body */}
-        <div className="relative z-10 p-7 lg:p-9 w-full">
-          {/* Top row: Number & Distinctive Icon */}
-          <div className="flex items-start justify-between mb-8">
-            <span className="text-xs font-semibold tracking-wider text-white/30 uppercase">{division.index}</span>
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 shadow-md"
-              style={{
-                background: hovered ? `${division.accentColor}25` : 'rgba(255,255,255,0.04)',
-                color: hovered ? division.accentColor : 'rgba(255,255,255,0.4)',
-                border: `1px solid ${hovered ? `${division.accentColor}50` : 'rgba(255,255,255,0.08)'}`,
-                transform: hovered ? 'scale(1.1)' : 'scale(1)',
-              }}
-            >
-              <LIcon name={division.icon} size={22} />
-            </div>
+        {/* Top bar: Number & Jewel Icon */}
+        <div className="relative z-10 flex items-start justify-between w-full">
+          <span className="text-xs font-bold tracking-widest text-white/40 uppercase">
+            {division.index}
+          </span>
+          <div
+            className="w-13 h-13 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-lg"
+            style={{
+              background: hovered ? `${division.accentColor}30` : 'rgba(0,0,0,0.6)',
+              color: hovered ? division.accentColor : 'rgba(255,255,255,0.7)',
+              border: `1px solid ${hovered ? `${division.accentColor}70` : 'rgba(255,255,255,0.12)'}`,
+              transform: hovered ? 'scale(1.1)' : 'scale(1)',
+            }}
+          >
+            <LIcon name={division.icon} size={24} />
           </div>
+        </div>
 
-          {/* Division Title */}
-          <h3 className="text-2xl lg:text-3xl font-extrabold text-white tracking-tight leading-snug mb-3">
+        {/* Content */}
+        <div className="relative z-10 my-auto py-6">
+          <h3 className="text-2xl lg:text-3xl font-extrabold text-white tracking-tight leading-tight mb-3">
             {division.label}
           </h3>
-
-          {/* Short Narrative */}
-          <p className="text-sm text-white/50 font-normal leading-relaxed">
+          <p className="text-sm text-white/60 font-normal leading-relaxed">
             {division.tagline}
           </p>
         </div>
 
-        {/* Card Footer: Clear Interaction Indicator */}
-        <div className="relative z-10 px-7 lg:px-9 py-5 border-t w-full flex items-center justify-between" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-          <span className="text-xs font-semibold tracking-wide uppercase" style={{ color: `${division.accentColor}dd` }}>
+        {/* Bottom bar: Service count & Enter portal action */}
+        <div className="relative z-10 pt-5 border-t border-white/[0.08] w-full flex items-center justify-between">
+          <span className="text-xs font-bold tracking-wider uppercase" style={{ color: division.accentColor }}>
             {division.services.length} Services
           </span>
-          <span
-            className="flex items-center gap-2 text-xs font-semibold tracking-wide uppercase transition-colors duration-300"
-            style={{ color: hovered ? '#ffffff' : 'rgba(255,255,255,0.4)' }}
-          >
-            Enter World
-            <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white/70 group-hover:text-white transition-colors">
+            Enter Experience
+            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
           </span>
         </div>
       </button>
@@ -932,7 +773,7 @@ export default function App() {
       </section>
 
       {/* ══════════════════════════════════════════════════
-          MAIN SERVICE SELECTOR (Section 1 & 2)
+          MAIN SERVICE SELECTOR (The 3 Division Portals)
           ══════════════════════════════════════════════════ */}
       <section id="services" className="relative py-28 md:py-36 border-t border-white/[0.04] overflow-hidden">
         <div className="absolute inset-0 flex items-center overflow-hidden opacity-100 pointer-events-none">
@@ -953,7 +794,7 @@ export default function App() {
             </Reveal>
             <Reveal delay={0.12}>
               <p className="text-sm text-white/45 font-normal max-w-xs leading-relaxed md:text-right">
-                Click any division icon to enter its dedicated cinematic digital world.
+                Click any division to enter its dedicated cinematic digital world.
               </p>
             </Reveal>
           </div>
