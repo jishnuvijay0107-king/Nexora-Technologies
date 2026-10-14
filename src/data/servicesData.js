@@ -1,18 +1,19 @@
 // Nexora Technologies — Service Division Data
-// All descriptions are exact per specification. No fabricated results.
+// All titles, supporting texts, and descriptions match specification verbatim.
 
 export const divisions = [
   {
     id: 'software',
     index: '01',
     label: 'Software Engineering',
-    tagline: 'From concept to production-grade systems',
-    narrative:
-      'We design and engineer custom software, responsive websites, and digital products with an obsessive attention to craft. Every interface is considered, every system is built to last.',
-    accentColor: '#3e5cf7',
-    accentRgb: '62, 92, 247',
-    glowColor: 'rgba(62,92,247,0.18)',
-    bgGradient: 'radial-gradient(ellipse at 30% 50%, rgba(62,92,247,0.12) 0%, transparent 65%), radial-gradient(ellipse at 80% 20%, rgba(62,92,247,0.06) 0%, transparent 50%)',
+    tagline: 'Engineering Digital Experiences',
+    headline: 'Engineering Digital Experiences.',
+    supportingText: 'We design and build digital products, websites, and software that turn ambitious ideas into practical solutions.',
+    narrative: 'We design and build digital products, websites, and software that turn ambitious ideas into practical solutions.',
+    accentColor: '#3e6df7',
+    accentRgb: '62, 109, 247',
+    glowColor: 'rgba(62,109,247,0.22)',
+    bgGradient: 'radial-gradient(ellipse at 35% 45%, rgba(45,85,245,0.18) 0%, transparent 60%), radial-gradient(ellipse at 80% 25%, rgba(30,60,200,0.10) 0%, transparent 50%)',
     icon: 'Code2',
     services: [
       {
@@ -45,13 +46,14 @@ export const divisions = [
     id: 'cyber',
     index: '02',
     label: 'Cybersecurity',
-    tagline: 'Protecting what matters most',
-    narrative:
-      'Our security practice combines technical depth with practical clarity. We help organizations understand their exposure, strengthen their defences, and maintain the integrity of their digital operations.',
+    tagline: 'Stronger Security for a Safer Tomorrow',
+    headline: 'Stronger Security for a Safer Tomorrow.',
+    supportingText: 'We help organizations identify risks, strengthen their defenses, and improve the security of their digital environments.',
+    narrative: 'We help organizations identify risks, strengthen their defenses, and improve the security of their digital environments.',
     accentColor: '#00d4cc',
     accentRgb: '0, 212, 204',
-    glowColor: 'rgba(0,212,204,0.15)',
-    bgGradient: 'radial-gradient(ellipse at 70% 40%, rgba(0,212,204,0.10) 0%, transparent 65%), radial-gradient(ellipse at 20% 70%, rgba(0,180,200,0.06) 0%, transparent 50%)',
+    glowColor: 'rgba(0,212,204,0.20)',
+    bgGradient: 'radial-gradient(ellipse at 65% 40%, rgba(0,212,204,0.16) 0%, transparent 60%), radial-gradient(ellipse at 20% 70%, rgba(0,160,210,0.10) 0%, transparent 50%)',
     icon: 'Shield',
     services: [
       {
@@ -114,13 +116,14 @@ export const divisions = [
     id: 'ai',
     index: '03',
     label: 'Artificial Intelligence',
-    tagline: 'Intelligent systems for real-world impact',
-    narrative:
-      'We apply AI and automation where it creates genuine operational value — reducing repetitive work, surfacing insights from data, and enabling teams to focus on what only humans can do.',
+    tagline: 'Intelligent Solutions for a Smarter Tomorrow',
+    headline: 'Intelligent Solutions for a Smarter Tomorrow.',
+    supportingText: 'We build AI-powered applications and intelligent automation that help businesses work smarter and make better-informed decisions.',
+    narrative: 'We build AI-powered applications and intelligent automation that help businesses work smarter and make better-informed decisions.',
     accentColor: '#9b5de5',
     accentRgb: '155, 93, 229',
-    glowColor: 'rgba(155,93,229,0.16)',
-    bgGradient: 'radial-gradient(ellipse at 50% 30%, rgba(155,93,229,0.12) 0%, transparent 65%), radial-gradient(ellipse at 85% 75%, rgba(120,60,210,0.07) 0%, transparent 50%)',
+    glowColor: 'rgba(155,93,229,0.22)',
+    bgGradient: 'radial-gradient(ellipse at 50% 35%, rgba(155,93,229,0.18) 0%, transparent 60%), radial-gradient(ellipse at 85% 75%, rgba(110,50,230,0.10) 0%, transparent 50%)',
     icon: 'Brain',
     services: [
       {
