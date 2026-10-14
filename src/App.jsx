@@ -49,11 +49,22 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Subtle interactive mouse-parallax coordinates for living cinematic depth
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
     window.addEventListener('scroll', fn, { passive: true });
     return () => window.removeEventListener('scroll', fn);
   }, []);
+
+  const handleMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    const x = (clientX / innerWidth - 0.5) * 2; // -1 to 1
+    const y = (clientY / innerHeight - 0.5) * 2;
+    setMousePos({ x, y });
+  };
 
   /* Parallax for hero image */
   const heroRef = useRef(null);
@@ -61,8 +72,9 @@ export default function App() {
     target: heroRef,
     offset: ['start start', 'end start'],
   });
-  const heroY = useTransform(heroProgress, [0, 1], ['0%', '25%']);
-  const heroOpacity = useTransform(heroProgress, [0, 0.7], [1, 0]);
+  const heroY = useTransform(heroProgress, [0, 1], ['0%', '24%']);
+  const heroScale = useTransform(heroProgress, [0, 1], [1, 1.12]);
+  const heroOpacity = useTransform(heroProgress, [0, 0.75], [1, 0]);
 
   const links = [
     { label: 'Services', href: '#services' },
@@ -72,14 +84,14 @@ export default function App() {
   ];
 
   return (
-    <div className="bg-[#04060c] text-[#c8cfd8] antialiased overflow-x-hidden">
+    <div className="bg-[#04060c] text-[#c8cfd8] antialiased overflow-x-hidden selection:bg-[#4f6df0]/30 selection:text-white">
       {/* ══════════════════════════════════════════════════════════════════
           NAVIGATION
           ══════════════════════════════════════════════════════════════════ */}
       <nav
         className={`fixed inset-x-0 top-0 z-[100] transition-all duration-500 ${
           scrolled
-            ? 'bg-[#04060c]/80 backdrop-blur-2xl border-b border-white/[0.06] py-4'
+            ? 'bg-[#04060c]/85 backdrop-blur-2xl border-b border-white/[0.06] py-4 shadow-2xl'
             : 'bg-transparent py-6'
         }`}
       >
@@ -144,22 +156,60 @@ export default function App() {
       </nav>
 
       {/* ══════════════════════════════════════════════════════════════════
-          HERO — Full-bleed cinematic
+          HERO — Cinematic Living Motion Canvas
           ══════════════════════════════════════════════════════════════════ */}
-      <section ref={heroRef} className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
-        {/* Parallax background */}
-        <motion.div className="absolute inset-0 z-0" style={{ y: heroY }}>
-          <img
-            src="/hero-bg.jpg"
-            alt=""
-            className="w-full h-[120%] object-cover object-center"
-          />
+      <section
+        ref={heroRef}
+        onMouseMove={handleMouseMove}
+        className="relative h-screen min-h-[720px] flex items-end overflow-hidden"
+      >
+        {/* Layer 1: Parallax container tied to scroll + mouse responsiveness */}
+        <motion.div
+          className="absolute inset-0 z-0 pointer-events-none"
+          style={{ y: heroY, scale: heroScale }}
+        >
+          {/* Layer 2: Slow breathing continuous Ken Burns cinematic drift */}
+          <div
+            className="w-full h-full animate-hero-cinematic transition-transform duration-700 ease-out"
+            style={{
+              transform: `translate3d(${mousePos.x * 12}px, ${mousePos.y * 10}px, 0)`,
+            }}
+          >
+            <img
+              src="/hero-bg.jpg"
+              alt="Cinematic planetary horizon"
+              className="w-full h-[125%] object-cover object-center filter contrast-[1.08] brightness-[0.88]"
+            />
+          </div>
         </motion.div>
 
-        {/* Cinematic overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#04060c] via-[#04060c]/40 to-transparent z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#04060c]/70 via-transparent to-transparent z-[1]" />
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#04060c] to-transparent z-[1]" />
+        {/* Layer 3: Living Solar Flare / Horizon Light Burst (matches the bright star on the planetary curve) */}
+        <div
+          className="absolute top-[16%] right-[31%] w-36 h-36 md:w-56 md:h-56 rounded-full pointer-events-none z-[1] animate-flare"
+          style={{
+            background: 'radial-gradient(circle, rgba(165, 215, 255, 0.45) 0%, rgba(79, 109, 240, 0.2) 40%, transparent 75%)',
+            filter: 'blur(22px)',
+          }}
+        />
+
+        {/* Layer 4: Distant Twinkling Star Accents on the deep cosmos */}
+        <div className="absolute top-[12%] right-[11%] w-1.5 h-1.5 rounded-full bg-white animate-star-1 pointer-events-none z-[1] shadow-[0_0_10px_#fff]" />
+        <div className="absolute top-[18%] right-[14%] w-1 h-1 rounded-full bg-[#91a7ff] animate-star-2 pointer-events-none z-[1] shadow-[0_0_8px_#91a7ff]" />
+        <div className="absolute top-[42%] right-[29%] w-1 h-1 rounded-full bg-white animate-star-1 pointer-events-none z-[1] shadow-[0_0_8px_#fff]" />
+        <div className="absolute top-[37%] left-[19%] w-1 h-1 rounded-full bg-[#a0b4ff] animate-star-2 pointer-events-none z-[1] shadow-[0_0_8px_#a0b4ff]" />
+
+        {/* Layer 5: Atmospheric Volumetric Glow on Horizon Base */}
+        <div
+          className="absolute bottom-[28%] inset-x-0 h-48 pointer-events-none z-[1] opacity-60"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 100%, rgba(255, 175, 120, 0.12) 0%, rgba(79, 109, 240, 0.08) 50%, transparent 80%)',
+          }}
+        />
+
+        {/* Layer 6: Film Grain / Vignette Overlays for seamless depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#04060c] via-[#04060c]/35 to-transparent z-[2]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#04060c]/80 via-transparent to-transparent z-[2]" />
+        <div className="absolute bottom-0 inset-x-0 h-44 bg-gradient-to-t from-[#04060c] to-transparent z-[2]" />
 
         {/* Content — anchored to bottom-left like a film title card */}
         <motion.div
@@ -170,8 +220,9 @@ export default function App() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-[#7b8fea] mb-6"
+            className="text-[11px] md:text-xs font-medium tracking-[0.4em] uppercase text-[#7b8fea] mb-6 flex items-center gap-2.5"
           >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#4f6df0] shadow-[0_0_8px_#4f6df0]" />
             Software · Security · Intelligence · Cloud
           </motion.p>
 
@@ -207,7 +258,7 @@ export default function App() {
               href="#work"
               className="group inline-flex items-center gap-3 text-sm font-medium text-white"
             >
-              <span className="w-12 h-12 rounded-full border border-white/20 group-hover:border-[#4f6df0] group-hover:bg-[#4f6df0]/10 flex items-center justify-center transition-all duration-500">
+              <span className="w-12 h-12 rounded-full border border-white/20 group-hover:border-[#4f6df0] group-hover:bg-[#4f6df0]/10 flex items-center justify-center transition-all duration-500 shadow-[0_0_20px_rgba(79,109,240,0.15)] group-hover:shadow-[0_0_30px_rgba(79,109,240,0.4)]">
                 <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
               </span>
               <span className="tracking-wide group-hover:text-[#a0b4ff] transition-colors">See our work</span>
